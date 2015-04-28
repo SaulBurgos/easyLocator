@@ -3,11 +3,11 @@
     "title": "EasyLocator Google Maps",
     "description": "jQuery plugin to load locations with google maps, using a google spreadsheet or array of objects. Simple fast you do not need to know Google Maps API .",
     "keywords": [
-        "google maps",
+        "googlemaps",
         "location",
-        "google spreadsheet"
+        "googlespreadsheet"
     ],
-    "version": "0.1",
+    "version": "1.0.0",
     "author": {
         "name": "Saul Burgos",
         "url": "http://saulburgos.com/"
