@@ -77,7 +77,7 @@ easyLocator properties:
 
 **markerClustererOptions (object):**  Marker clusterer options
 
-**openInfowindowAfterClick (boolean):**  If you what open the infowindows after click on ine item in the list.
+**openInfowindowAfterClick (boolean):**  If you want open the infowindows after click on ine item in the list.
 
 **myLocations (array objects):**  array of object with your locations instead of the Google Spreadsheed.
  
