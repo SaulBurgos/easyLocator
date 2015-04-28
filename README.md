@@ -11,7 +11,7 @@ Examples:
  1. [Basic example](http://saulburgos.com/apps/easylocator/simple.html)
  2. [Array of object](http://saulburgos.com/apps/easylocator/array.html)
 
-Add the plugin to your web
+Add easyLocator in your web
 
     <script src="easyLocator.js"></script>
 
@@ -25,18 +25,18 @@ How to use it.
 	
 3. Copy the url and extract the spreadsheetId:
 
-     example: 
+     Example: 
      
      docs.google.com/spreadsheets/d/**1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU**/pubhtml
      
-     (bold text is the ID)
+     (bold text is the spreadsheetId)
      
 4. Call easyLocator with your selector and pass your spreadsheetId
 
 	$(*yourContainer*).**easyLocator**({
            spreadsheetId: '1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU'                     
 
-	*"youcontainer" must have height*
+	*"youcontainer" must have height"*
 
 5. Done.
 	  
@@ -51,15 +51,15 @@ How to use it.
 SpreadSheet columns:
 --------------------
 
-**title:**   Title each locations, this will be use in the list.
+**title:**   Title of each locations, this will be use in the list.
 
-**description:**  Description will only appear inside the infowindow
+**description:**  Description,it will only appear inside the infowindow.
 
-**lat:**  Coordinate use by google maps (latitude)
+**lat:**  Coordinate use by google maps (latitude).
 
-**lng:**  Coordinate use by google maps (longitude)
+**lng:**  Coordinate use by google maps (longitude).
 
-**image:**  Image of your location
+**image:**  Image of your location.
 
 **link:**  If you want add a link, it will appear after the description
 
@@ -67,7 +67,7 @@ SpreadSheet columns:
 
 *The most important part  when you add a location  in your spreadsheet, are the coordinates (lat, lng) together describe the exact location of a place in Google map.*
 
-*If you want to know these coordinates,  you can use [this example](http://jsfiddle.net/kjy112/QvNUF/), just drag the marker and you will see the coordinates*
+*If you want to know these coordinates,  you can use [this example](http://jsfiddle.net/kjy112/QvNUF/), just drag the marker and you will see the coordinates lat, lng*
 
 easyLocator properties:
 -----------------------
@@ -96,4 +96,6 @@ easyLocator properties:
 **easyLocator is 100% free to use. If you're using easyLocator on a commercial project and feeling generous, consider a donation. Thanks!**
 
 [Donate :)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QBMMNFS76EMYU)
+
+[![donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QBMMNFS76EMYU)
 ---------
