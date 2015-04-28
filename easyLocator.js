@@ -24,13 +24,7 @@
          style.href = "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
          var firstLink = document.getElementsByTagName('link')[0];
          firstLink.parentNode.insertBefore(style, firstLink);
-         
-         /*var script = document.createElement('script');
-         script.type = 'text/javascript';
-         script.src = 'https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js';
-         document.body.appendChild(script);*/
-         
-         //if(!that.easyLocatorMethods.options.isAPIloaded || !(typeof google === 'object' && typeof google.maps === 'object') ) {
+      
          if(typeof google === 'object' && typeof google.maps === 'object') {
             that.easyLocatorMethods.options.isAPIloaded = true;
             this.loadMap();
