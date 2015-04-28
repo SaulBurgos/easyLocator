@@ -23,7 +23,7 @@
          style.rel = "stylesheet";
          style.href = "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
          var firstLink = document.getElementsByTagName('link')[0];
-         firstLink.parentNode.insertBefore(style, firstLink); 
+         firstLink.parentNode.insertBefore(style, firstLink);
          
          
          if(typeof google === 'object' && typeof google.maps === 'object') {
