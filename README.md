@@ -24,9 +24,13 @@ How to use it.
 	![enter image description here](http://i.imgur.com/0GIrxtA.jpg?1) 
 	
 3. Copy the url and extract the spreadsheetId:
+
      example: 
+     
      docs.google.com/spreadsheets/d/**1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU**/pubhtml
+     
      (bold text is the ID)
+     
 4. Call easyLocator with your selector and pass your spreadsheetId
 
 	$(*yourContainer*).**easyLocator**({
