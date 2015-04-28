@@ -24,7 +24,8 @@ How to use it.
 	![enter image description here](http://i.imgur.com/0GIrxtA.jpg?1) 
 	
 3. Copy the url and extract the spreadsheetId:
-     example: docs.google.com/spreadsheets/d/**1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU**/pubhtml
+     example: 
+     docs.google.com/spreadsheets/d/**1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU**/pubhtml
      (bold text is the ID)
 4. Call easyLocator with your selector and pass your spreadsheetId
 
@@ -78,7 +79,7 @@ easyLocator properties:
             lng: -85.9206
          }]
 
-easyLocator is 100% free to use. If you're using easyLocator on a commercial project and feeling generous, consider a donation. Thanks!
+**easyLocator is 100% free to use. If you're using easyLocator on a commercial project and feeling generous, consider a donation. Thanks!**
 
 [Donate :)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QBMMNFS76EMYU)
 ---------
