@@ -72,9 +72,13 @@ SpreadSheet columns:
 easyLocator properties:
 -----------------------
 **spreadsheetId (string):**  Google spreadsheetId 
+
 **useMarkerCluster (boolean):**  If you want use the [cluster marker](https://googlemaps.github.io/js-marker-clusterer/docs/reference.html)
+
 **markerClustererOptions (object):**  Marker clusterer options
+
 **openInfowindowAfterClick (boolean):**  If you what open the infowindows after click on ine item in the list.
+
 **myLocations (array objects):**  array of object with your locations instead of the Google Spreadsheed.
  
  example array : 
