@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<title>Easy locator</title>
+	 <link rel="stylesheet" type="text/css" href="easyLocator.css">  
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+   <script src="easyLocator.js"></script>
+   <script src="markerclusterer.min.js"></script>
+</head>
+
+<body>
+	<div id="locatorList" style="height:400px"></div>
+	<script>      
+      $( document ).ready(function() {
+        $('#locatorList').easyLocator({
+           spreadsheetId: '1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU'                     
+        });
+      });
+   </script>
+</body>
+
+</html>
