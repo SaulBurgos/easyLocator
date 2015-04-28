@@ -52,11 +52,17 @@ SpreadSheet columns:
 --------------------
 
 **title:**   Title each locations, this will be use in the list.
+
 **description:**  Description will only appear inside the infowindow
+
 **lat:**  Coordinate use by google maps (latitude)
+
 **lng:**  Coordinate use by google maps (longitude)
+
 **image:**  Image of your location
+
 **link:**  If you want add a link, it will appear after the description
+
 **iconmarker:**  If you want to customize the icon marker, you can use a url. Size recommended 30x30 pixels (png,jpeg, jpg)
 
 *The most important part  when you add a location  in your spreadsheet, are the coordinates (lat, lng) together describe the exact location of a place in Google map.*
