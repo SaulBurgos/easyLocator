@@ -10,6 +10,7 @@
          myLocations: [],
          openInfowindowAfterClick: false,
          useMarkerCluster: false,
+         afterCLick: undefined,
          markerClustererOptions: { 
             maxZoom: 12
          }     
@@ -23,7 +24,8 @@
          style.rel = "stylesheet";
          style.href = "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
          var firstLink = document.getElementsByTagName('link')[0];
-         firstLink.parentNode.insertBefore(style, firstLink);         
+         firstLink.parentNode.insertBefore(style, firstLink);
+         
         
          if(typeof google === 'object' && typeof google.maps === 'object') {
             that.easyLocatorMethods.options.isAPIloaded = true;
@@ -256,6 +258,12 @@
              location.description + '</p>' + locationLink + '</div>';
          this.options.infoWindow.setContent(contentHTMl);
          this.options.infoWindow.open(this.options.map, location.marker);
+         
+         if(typeof this.options.afterCLick !== 'undefined') {
+            if(typeof this.options.afterCLick === 'function') {
+               this.options.afterCLick(location);   
+            }            
+         }
       }
       
    };   
@@ -276,4 +284,5 @@
    };
  
 }(jQuery));
+
 
