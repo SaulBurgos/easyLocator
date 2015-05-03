@@ -80,6 +80,8 @@ easyLocator properties:
 **openInfowindowAfterClick (boolean):**  If you want open the infowindows after click on ine item in the list.
 
 **myLocations (array objects):**  array of object with your locations instead of the Google Spreadsheed.
+
+**afterCLick (function):** callback function after clicked on an item in the list or marker, you will get only one argument the location clicked
  
  example array : 
 
