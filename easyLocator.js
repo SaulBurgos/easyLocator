@@ -259,11 +259,10 @@
          this.options.infoWindow.setContent(contentHTMl);
          this.options.infoWindow.open(this.options.map, location.marker);
          
-         if(typeof this.options.afterCLick !== 'undefined') {
-            if(typeof this.options.afterCLick === 'function') {
-               this.options.afterCLick(location);   
-            }            
-         }
+         if(typeof this.options.afterCLick === 'function') {
+            this.options.afterCLick(location);   
+         }            
+         
       }
       
    };   
