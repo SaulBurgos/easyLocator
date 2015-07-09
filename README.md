@@ -18,7 +18,7 @@ Add easyLocator in your web
 How to use it.
 --------------
 
-1. Create a Google spreadsheet like [this](https://docs.google.com/spreadsheets/d/1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU/edit?usp=sharing) , columns names need to be the same.
+1. Create a Google spreadsheet like [this](https://docs.google.com/spreadsheets/d/1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s/edit?usp=sharing) , columns names need to be the same.
 2. Go to:  "file > publish to the web" and verify the following fields 
 
 	![enter image description here](http://i.imgur.com/0GIrxtA.jpg?1) 
