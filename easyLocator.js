@@ -11,6 +11,7 @@
          openInfowindowAfterClick: false,
          useMarkerCluster: false,
          afterCLick: undefined,
+         mapType: undefined,
          markerClustererOptions: { 
             maxZoom: 12
          }     
@@ -50,6 +51,11 @@
             center: new google.maps.LatLng(-34.397, 150.644),
             mapTypeId: google.maps.MapTypeId.ROADMAP
          };
+
+         if(typeof this.options.mapType !== 'undefined') {
+            mapOptions.mapTypeId = google.maps.MapTypeId[this.options.mapType];
+         }
+
          this.options.map = new google.maps.Map(document.getElementById('mapContainer_map'), mapOptions);        
          this.options.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.createButtonList());
          this.options.infoWindow = new google.maps.InfoWindow({ maxWidth: 400 });      
@@ -259,10 +265,11 @@
          this.options.infoWindow.setContent(contentHTMl);
          this.options.infoWindow.open(this.options.map, location.marker);
          
-         if(typeof this.options.afterCLick === 'function') {
-            this.options.afterCLick(location);   
-         }            
-         
+         if(typeof this.options.afterCLick !== 'undefined') {
+            if(typeof this.options.afterCLick === 'function') {
+               this.options.afterCLick(location);   
+            }            
+         }
       }
       
    };   
