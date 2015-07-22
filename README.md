@@ -82,6 +82,9 @@ easyLocator properties:
 **myLocations (array objects):**  array of object with your locations instead of the Google Spreadsheed.
 
 **afterCLick (function):** callback function after clicked on an item in the list or marker, you will get only one argument the location clicked
+
+**mapType (string):** Identifiers for common MapTypes: 'HYBRID','ROADMAP','SATELLITE','TERRAIN'
+
  
  example array : 
 
