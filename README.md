@@ -87,6 +87,9 @@ easyLocator properties:
 
 **apiKey (string and Mandatory):** You need create an api key and put it here. Follow these [steps](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
+If you do not add the apiKey the map won't load and you will get this error:
+![error api key](http://i.imgur.com/IRYSwVt.png?1)
+
  
  example array : 
 
