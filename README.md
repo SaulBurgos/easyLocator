@@ -85,6 +85,8 @@ easyLocator properties:
 
 **mapType (string):** Identifiers for common MapTypes: 'HYBRID','ROADMAP','SATELLITE','TERRAIN'
 
+**apiKey (number):** You need create an api key and put it here. Follow these [steps](https://developers.google.com/maps/documentation/javascript/get-api-key)
+
  
  example array : 
 
