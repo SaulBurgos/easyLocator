@@ -10,15 +10,22 @@
          myLocations: [],
          openInfowindowAfterClick: false,
          useMarkerCluster: false,
+         apiKey: null,
          afterCLick: undefined,
          mapType: undefined,
          markerClustererOptions: { 
-            maxZoom: 12
+            maxZoom: 12,
+            imagePath: 'https://googlemaps.github.io/js-marker-clusterer/images/m'
          }     
       },
       loadScripts : function(container) { 
+
+         if(that.easyLocatorMethods.options.apiKey === null) {
+            alert('Error loading you map because, you need add the apiKey of google maps.');
+         }
+
          this.showHideLoader('show');
-         var scriptMapUrl = 'https://maps.googleapis.com/maps/api/js?libraries=places&signed_in=true' +
+         var scriptMapUrl = 'https://maps.googleapis.com/maps/api/js?key=' + that.easyLocatorMethods.options.apiKey + '&libraries=places&signed_in=true' +
             '&signed_in=true&language=en&callback=window.easyLocatorMethods.loadMap';
          
          var style = document.createElement('link');
