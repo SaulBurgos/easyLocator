@@ -31,10 +31,12 @@ How to use it.
      
      (bold text is the spreadsheetId)
      
-4. Call easyLocator with your selector and pass your spreadsheetId
+4. Call easyLocator with your selector and pass your spreadsheetId and teh google maps apiKey
 
 	$(*yourContainer*).**easyLocator**({
-           spreadsheetId: '1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU'                     
+          spreadsheetId: '1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU',
+          apiKey: 'YOUR GOOGLE MAP API KEY'
+   	})
 
 	*"youcontainer" must have height"*
 
