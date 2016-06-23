@@ -81,15 +81,6 @@ easyLocator properties:
 
 **myLocations (array objects):**  array of object with your locations instead of the Google Spreadsheed.
 
-**afterCLick (function):** callback function after clicked on an item in the list or marker, you will get only one argument the location clicked
-
-**mapType (string):** Identifiers for common MapTypes: 'HYBRID','ROADMAP','SATELLITE','TERRAIN'
-
-**apiKey (string and Mandatory):** You need create an api key and put it here. Follow these [steps](https://developers.google.com/maps/documentation/javascript/get-api-key)
-
-If you do not add the apiKey the map won't load and you will get this error:
-![error api key](http://i.imgur.com/IRYSwVt.png?1)
-
  
  example array : 
 
@@ -102,6 +93,17 @@ If you do not add the apiKey the map won't load and you will get this error:
             lat: 12.9232,
             lng: -85.9206
          }]
+
+**afterCLick (function):** callback function after clicked on an item in the list or marker, you will get only one argument the location clicked
+
+**mapType (string):** Identifiers for common MapTypes: 'HYBRID','ROADMAP','SATELLITE','TERRAIN'
+
+**apiKey (string and Mandatory):** You need create an api key and put it here. Follow these [steps](https://developers.google.com/maps/documentation/javascript/get-api-key)
+
+If you do not add the apiKey the map won't load and you will get this error:
+![error api key](http://i.imgur.com/IRYSwVt.png?1)
+
+
 
 **easyLocator is 100% free to use. If you're using easyLocator on a commercial project and feeling generous, consider a donation. Thanks :) !**
 
