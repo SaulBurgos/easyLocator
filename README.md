@@ -111,3 +111,9 @@ If you do not add the apiKey the map won't load and you will get this error:
 
 [![donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QBMMNFS76EMYU)
 ---------
+
+
+Additional Tool Paneek.net:
+-----------------------
+
+Do you want create virtual tour for your business ? Check my service: [http://www.paneek.net/](http://www.paneek.net/)
