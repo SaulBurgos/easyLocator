@@ -116,4 +116,4 @@ If you do not add the apiKey the map won't load and you will get this error:
 Additional Tool Paneek.net:
 -----------------------
 
-Do you want create virtual tour for your business ? Check my service: [http://www.paneek.net/](http://www.paneek.net/)
+Do you want a create virtual tour for your business ? Check my service: [http://www.paneek.net/](http://www.paneek.net/)
