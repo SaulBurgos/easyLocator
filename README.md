@@ -85,6 +85,8 @@ easyLocator properties:
 **myLocations (array objects):**  array of object with your locations instead of the Google Spreadsheed.
 
 **showListOnDesktop (boolean):** If you want hide the left list items on desktop version, The map will get width 100% automatically
+
+**showListOnMobile (boolean):** If you want hide the left list items on mobile version
  
 **itemListActiveCustomClass (string):** This class will be added in the parent item after a click. You can use it to customize the element.
          
