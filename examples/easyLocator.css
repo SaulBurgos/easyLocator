@@ -182,8 +182,14 @@
       overflow-y: auto;
       overflow-x: hidden;
    }
-   #mapContainer_map {
+
+   .locatorMap_map {
       width: 75%;
       float: right;
+   }
+
+   /**When the list is not needed*/
+   .locatorMap_map--fullWidth {
+      width: 100%;
    }
 }
