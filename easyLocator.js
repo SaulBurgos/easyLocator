@@ -12,6 +12,7 @@
          myLocations: [],
          openInfowindowAfterClick: false,
          showListOnDesktop: true,
+         showListOnMobile: true,
          itemListActiveCustomClass: '',
          infoWindowCustomClass: '',
          useMarkerCluster: false,
@@ -105,6 +106,11 @@
          
       },
       createButtonList: function(controlDiv) {
+
+         if(!that.easyLocatorMethods.options.showListOnMobile) {
+            return;
+         }
+
          var buttonOpenList = $.parseHTML('<div id="locatorMap_openList"><i class="fa fa-list"></i></div>')[0];        
          
          google.maps.event.addDomListener(buttonOpenList, 'click', function() {
@@ -304,8 +310,10 @@
          $('#mapContainer_map').addClass('locatorMap_map--fullWidth');
          $('.js-locatorMap_listContainerDesktop').hide();
       }
-
+      
       return this;
    };
  
 }(jQuery));
+
+
