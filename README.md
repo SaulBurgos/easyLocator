@@ -5,6 +5,7 @@ EasyLocator is a jquery plugin to load locations with Google Maps in any website
 
 Dependencies : [markerclusterer](https://googlemaps.github.io/js-marker-clusterer/docs/reference.html) , [Jquery](https://jquery.com/)
 
+Note: (The file markerclusterer.min.js in this repo, is a version modified, you can use it if you want)
 
 Examples:
 
@@ -83,6 +84,13 @@ easyLocator properties:
 
 **myLocations (array objects):**  array of object with your locations instead of the Google Spreadsheed.
 
+**showListOnDesktop (boolean):** If you want hide the left list items on desktop version, The map will get width 100% automatically
+
+**showListOnMobile (boolean):** If you want hide the left list items on mobile version
+ 
+**itemListActiveCustomClass (string):** This class will be added in the parent item after a click. You can use it to customize the element.
+         
+**infoWindowCustomClass (string):** This class will be added in the infoWindow container. You can use it to customize the element.
  
  example array : 
 
