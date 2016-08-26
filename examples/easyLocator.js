@@ -17,7 +17,7 @@
          infoWindowCustomClass: '',
          useMarkerCluster: false,
          afterCLick: undefined,
-         mapType: undefined,
+         mapType: undefined,         
          markerClustererOptions: { 
             maxZoom: 12
          }     
@@ -29,7 +29,7 @@
          
          var style = document.createElement('link');
          style.rel = "stylesheet";
-         style.href = "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
+         style.href = "https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
          var firstLink = document.getElementsByTagName('link')[0];
          firstLink.parentNode.insertBefore(style, firstLink);
          
@@ -134,11 +134,27 @@
          document.body.appendChild(script);
          
       },
-      getContentITemList: function(i,title){
-         var htmlContent =  '<li class="locatorMap_list_item" data-indexarray="' + i + '">' + 
-               '<i class="locatorMap_list_item_icon fa fa-map-marker"></i>' + 
+      getContentITemList: function(i,title,itemInfo) {
+
+         if(typeof itemInfo.gsx$iconmarker !== 'undefined') {
+            itemInfo.iconMarker = itemInfo.gsx$iconmarker.$t;
+         }
+
+         var htmlContent =  '<li class="locatorMap_list_item" data-indexarray="' + i + '" data-isactive="false">' + 
+               '<span class="ocatorMap_list_itemPlaceHolder"></span>'+                
                ' <span class="locatorMap_list_item_title">' + title + '</span>' +
-               '</li>';
+               '</li>';         
+         
+         if(itemInfo.iconMarker == '' || typeof itemInfo.iconMarker == 'undefined' ) {
+            htmlContent = htmlContent.replace('<span class="ocatorMap_list_itemPlaceHolder"></span>','<i class="locatorMap_list_item_icon fa fa-map-marker"></i>')
+         }
+
+         if(itemInfo.iconMarker != '') {
+            htmlContent = htmlContent.replace(
+               '<span class="ocatorMap_list_itemPlaceHolder"></span>',
+               '<img src="' + itemInfo.iconMarker + '" class="locatorMap_list_item_iconImage" />')
+         }
+         
          return htmlContent;
       },
       successGetJsonData: function(json) {
@@ -148,7 +164,7 @@
          
          for(var i = 0; i < json.feed.entry.length; i++) {
             var entry = json.feed.entry[i];    
-            itemsHtml = itemsHtml + this.getContentITemList(i,entry.gsx$title.$t);            
+            itemsHtml = itemsHtml + this.getContentITemList(i,entry.gsx$title.$t , entry);            
             
             var marker = new google.maps.Marker({
                position: new google.maps.LatLng(entry.gsx$lat.$t,entry.gsx$lng.$t),               
@@ -171,17 +187,17 @@
                image: entry.gsx$image.$t, 
                link: entry.gsx$link.$t,
                iconMarker: entry.gsx$iconmarker.$t,
-               marker: marker 
+               iconMarkerActive: entry.gsx$iconmarkeractive.$t,               
+               marker: marker, 
+               active: false 
             });
             
             if(this.options.useMarkerCluster) {
                this.options.markerClusterer.addMarker(marker);
             }
-         }         
-         listLocations.html(itemsHtml);     
-         this.centerMapOnLocations();
-         this.attachEventLocations();
-         this.showHideLoader('hide');
+         }
+
+         this.loadItemsOnList(listLocations,itemsHtml);         
       },
       loadMyLocations: function() {
          var listLocations = $('.locatorMap_list');
@@ -190,7 +206,7 @@
          
          for(var i = 0; i < this.options.myLocations.length; i++) {
             var entry = this.options.myLocations[i];       
-            itemsHtml = itemsHtml + this.getContentITemList(i,entry.title);
+            itemsHtml = itemsHtml + this.getContentITemList(i,entry.title ,entry);
             
             var marker = new google.maps.Marker({
                position: new google.maps.LatLng(entry.lat,entry.lng),               
@@ -212,15 +228,22 @@
                description: entry.description,
                image: entry.image, 
                link: entry.link,
-               iconMarker: entry.iconmarker,
-               marker: marker 
+               iconMarker: entry.iconMarker,               
+               iconMarkerActive: entry.iconMarkerActive,               
+               marker: marker,
+               active: false 
             });
             
             if(this.options.useMarkerCluster) {
                this.options.markerClusterer.addMarker(marker);
             }
          }         
-         listLocations.html(itemsHtml);     
+
+         this.loadItemsOnList(listLocations,itemsHtml);         
+      },
+      loadItemsOnList: function(listLocations,itemsHtml) {
+         listLocations.html(itemsHtml);
+         that.easyLocatorMethods
          this.centerMapOnLocations();
          this.attachEventLocations();
          this.showHideLoader('hide');
@@ -246,12 +269,15 @@
          
          $('.locatorMap_list_item').on('click',function() {
 
+            that.easyLocatorMethods.removeAllIconsActive();
             /*remove all active first*/
             $('.locatorMap_list_item').removeClass(that.easyLocatorMethods.options.itemListActiveCustomClass);      
 
             var locationClicked = that.easyLocatorMethods.locations[$(this).attr('data-indexarray')];
-            that.easyLocatorMethods.options.map.setCenter(locationClicked.marker.getPosition());
             
+
+            that.easyLocatorMethods.options.map.setCenter(locationClicked.marker.getPosition());
+
             if(that.easyLocatorMethods.options.openInfowindowAfterClick) {
                that.easyLocatorMethods.openInfoWindow(locationClicked);   
             }            
@@ -259,19 +285,62 @@
             if( $(window).width() <= 768) {//according to media query              
                $('.js-locatorMap_listContainerMobile').slideToggle( "fast");   
             }
-            
-            if(that.easyLocatorMethods.options.itemListActiveCustomClass != '') {
+
+            if(that.easyLocatorMethods.options.itemListActiveCustomClass != '') {               
                $(this).addClass(that.easyLocatorMethods.options.itemListActiveCustomClass);
             };
 
+            that.easyLocatorMethods.setIconsActiveOnItem({
+               elementClicked: this,
+               location: locationClicked
+            });
+
          });
+      },
+      setIconsActiveOnItem: function(data) {
+         $(data.elementClicked).addClass('locatorMap_list_item--active');
+         $(data.elementClicked).attr('data-isactive','true');
+         data.location.active = true;
+
+         if(data.location.iconMarkerActive != '' &&  typeof data.location.iconMarkerActive !== 'undefined') {
+            $(data.elementClicked).find('img').attr('src',data.location.iconMarkerActive);
+
+            
+            data.location.marker.setOptions({
+               icon: {
+                  url: data.location.iconMarkerActive,
+                  scaledSize: new google.maps.Size(42,42)
+               }
+            });
+         }
+      },
+      removeAllIconsActive: function() {
+
+         $('.locatorMap_list_item[data-isactive=true]').each(function( index ) {           
+            var location = that.easyLocatorMethods.locations[$(this).attr('data-indexarray')];
+            
+            $(this).removeClass('locatorMap_list_item--active');
+            location.active = false;
+
+            if(location.iconMarker != '' &&  typeof location.iconMarker !== 'undefined') {
+               $(this).find('img').attr('src',location.iconMarker);
+
+               location.marker.setOptions({
+                  icon: {
+                     url: location.iconMarker,
+                     scaledSize: new google.maps.Size(32,32)
+                  }
+               });
+            }
+         });
+
       },
       openInfoWindow: function(location) {
          var locationLink = '';
          var locationImage = '';
          
          if(location.link != '') {
-            locationLink = '<p><a href="' + location.link + '" target="_blank">Link</a></p>';
+            locationLink = '<p><a href="' + location.link + '" target="_blank">View</a></p>';
          }
          
          if(location.image != '') {
@@ -293,7 +362,6 @@
       getMapInstance: function() {
          return this.options.map;
       }
-      
    };   
    
    $.fn.easyLocator = function(options) {
