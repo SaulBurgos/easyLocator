@@ -289,6 +289,9 @@
                this.options.afterCLick(location);   
             }            
          }
+      },
+      getMapInstance: function() {
+         return this.options.map;
       }
       
    };   
@@ -296,8 +299,9 @@
    $.fn.easyLocator = function(options) {
       //custom contain selector to convert to handle Case-Insensitive
       jQuery.expr[':'].contains_ = function(a,i,m){
-          return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
+         return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
       };
+
       this.addClass('locatorMap');
       this.html(that.easyLocatorMethods.htmlPlug);
       // This is the easiest way to have default options.
@@ -311,7 +315,7 @@
          $('.js-locatorMap_listContainerDesktop').hide();
       }
       
-      return this;
+      return that.easyLocatorMethods;
    };
  
 }(jQuery));
