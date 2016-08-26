@@ -2,6 +2,7 @@
    var that = this;
    this.easyLocatorMethods = {
       locations: [],
+      locationActive: null,
       htmlPlug: '<div class="locatorMap_loader">Loading...</div><div id="mapContainer_map" class="locatorMap_map"> ' + 
       '</div><div class="locatorMap_listContainer locatorMap_list--desktop js-locatorMap_listContainerDesktop"><div class="locatorMap_listContainer_filter">  ' +
        '<input class="locatorMap_listContainer_filter_input" type="text" placeholder="filter.."> </div><ul class="locatorMap_list js-locatorMap_list"></ul> </div><div class="locatorMap_listContainer locatorMap_list--mobile js-locatorMap_listContainerMobile" style="display:none"> <div class="locatorMap_list_close js-locatorMap_list_Close"> <i class="fa fa-chevron-down"></i> </div><ul class="locatorMap_list"></ul> </div>',
@@ -67,17 +68,22 @@
          this.options.infoWindow = new google.maps.InfoWindow({ maxWidth: 400 });      
          this.options.markerClusterer = new MarkerClusterer(this.options.map, null,this.options.markerClustererOptions);
          
-          google.maps.event.addListenerOnce(this.options.map, 'idle', function() { 
-             if(typeof that.easyLocatorMethods.options.spreadsheetId !== 'undefined') {
-                that.easyLocatorMethods.getJsonData();               
-                return;
-             }
-             
-             if(that.easyLocatorMethods.options.myLocations.length > 0) {
-                that.easyLocatorMethods.loadMyLocations();
-             }
+         google.maps.event.addListenerOnce(this.options.map, 'idle', function() { 
+            if(typeof that.easyLocatorMethods.options.spreadsheetId !== 'undefined') {
+               that.easyLocatorMethods.getJsonData();               
+               return;
+            }
+
+            if(that.easyLocatorMethods.options.myLocations.length > 0) {
+               that.easyLocatorMethods.loadMyLocations();
+            }
                           
-          });
+         });
+
+         google.maps.event.addListener(this.options.infoWindow,'closeclick',function(){
+            that.easyLocatorMethods.locationActive.index
+            that.easyLocatorMethods.removeAllIconsActive();
+         });
          
       },
       createEvents: function() {
@@ -106,7 +112,6 @@
          
       },
       createButtonList: function(controlDiv) {
-
          if(!that.easyLocatorMethods.options.showListOnMobile) {
             return;
          }
@@ -182,6 +187,7 @@
             }
                       
             this.locations.push({
+               index: i,
                title: entry.gsx$title.$t,
                description: entry.gsx$description.$t,
                image: entry.gsx$image.$t, 
@@ -224,6 +230,7 @@
             }
                       
             this.locations.push({
+               index: i,
                title: entry.title,
                description: entry.description,
                image: entry.image, 
@@ -260,6 +267,11 @@
          function createEvent (location) {
             google.maps.event.addListener(location.marker,'click', function () {
                that.easyLocatorMethods.openInfoWindow(location);
+
+               that.easyLocatorMethods.setIconsActiveOnItem({
+                  elementClicked: $('.locatorMap_list_item')[location.index],
+                  location: location
+               });
             });
          }
          
@@ -338,6 +350,7 @@
       openInfoWindow: function(location) {
          var locationLink = '';
          var locationImage = '';
+         this.locationActive = location;
          
          if(location.link != '') {
             locationLink = '<p><a href="' + location.link + '" target="_blank">View</a></p>';
