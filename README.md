@@ -68,6 +68,8 @@ SpreadSheet columns:
 
 **iconmarker:**  If you want to customize the icon marker, you can use a url. Size recommended 30x30 pixels (png,jpeg, jpg)
 
+**iconmarkeractive:** This icon will replace the "iconmarker" when the item is clicked
+
 *The most important part  when you add a location  in your spreadsheet, are the coordinates (lat, lng) together describe the exact location of a place in Google map.*
 
 *If you want to know these coordinates,  you can use [this example](http://jsfiddle.net/kjy112/QvNUF/), just drag the marker and you will see the coordinates lat, lng*
