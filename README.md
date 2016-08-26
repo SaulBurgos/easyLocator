@@ -45,13 +45,13 @@ How to use it.
 
 After the call, the plugin will return the instance plugin created and you can use the method  **getMapInstance** to get the google map created. example: 
 
-	```javascript
+	
 	var easyLocatorPlugin = $(yourContainer).easyLocator({
           spreadsheetId: '1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU',
           apiKey: 'YOUR GOOGLE MAP API KEY'
    	})
 	var currentGoogleMap = easyLocatorPlugin.getMapInstance();
-	```
+	
 
 You can use **currentGoogleMap** to do whatever you want.
 
