@@ -33,24 +33,25 @@ How to use it.
      (bold text is the spreadsheetId)
      
 4. Call easyLocator with your selector and pass your spreadsheetId and teh google maps apiKey
-
-	$(*yourContainer*).**easyLocator**({
+	```javascript
+	$(yourContainer).easyLocator({
           spreadsheetId: '1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU',
           apiKey: 'YOUR GOOGLE MAP API KEY'
    	})
-
+	```
 	*"youcontainer" must have height"*
 
 5. Done.
 
 After the call, the plugin will return the instance plugin created and you can use the method  **getMapInstance** to get the google map created. example: 
 
-var easyLocatorPlugin = $(*yourContainer*).**easyLocator**({
+	```javascript
+	var easyLocatorPlugin = $(yourContainer).easyLocator({
           spreadsheetId: '1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU',
           apiKey: 'YOUR GOOGLE MAP API KEY'
    	})
-   	
-var currentGoogleMap = easyLocatorPlugin.getMapInstance();
+	var currentGoogleMap = easyLocatorPlugin.getMapInstance();
+	```
 
 You can use **currentGoogleMap** to do whatever you want.
 
@@ -110,8 +111,8 @@ easyLocator properties:
 **infoWindowCustomClass (string):** This class will be added in the infoWindow container. You can use it to customize the element.
  
  example array : 
-
-    var data = [{
+	
+	 var data = [{
             title: '',
             description: '',
             image: '', 
@@ -120,6 +121,7 @@ easyLocator properties:
             lat: 12.9232,
             lng: -85.9206
          }]
+ 	
 
 **afterCLick (function):** callback function after clicked on an item in the list or marker, you will get only one argument the location clicked
 
