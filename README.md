@@ -42,7 +42,18 @@ How to use it.
 	*"youcontainer" must have height"*
 
 5. Done.
-	  
+
+After the call, the plugin will return the instance plugin created and you can use the method  **getMapInstance** to get the google map created. example: 
+
+var easyLocatorPlugin = $(*yourContainer*).**easyLocator**({
+          spreadsheetId: '1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU',
+          apiKey: 'YOUR GOOGLE MAP API KEY'
+   	})
+   	
+var currentGoogleMap = easyLocatorPlugin.getMapInstance();
+
+You can use **currentGoogleMap** to do whatever you want.
+
 
 **Note:   before of using this plugin, you must insert the CSS and dependencies**
 
@@ -73,6 +84,10 @@ SpreadSheet columns:
 *The most important part  when you add a location  in your spreadsheet, are the coordinates (lat, lng) together describe the exact location of a place in Google map.*
 
 *If you want to know these coordinates,  you can use [this example](http://jsfiddle.net/kjy112/QvNUF/), just drag the marker and you will see the coordinates lat, lng*
+
+easyLocator methods:
+-----------------------
+**getMapInstance:** return the google map instance created
 
 easyLocator properties:
 -----------------------
