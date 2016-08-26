@@ -80,8 +80,7 @@
                           
          });
 
-         google.maps.event.addListener(this.options.infoWindow,'closeclick',function(){
-            that.easyLocatorMethods.locationActive.index
+         google.maps.event.addListener(this.options.infoWindow,'closeclick',function(){            
             that.easyLocatorMethods.removeAllIconsActive();
          });
          
