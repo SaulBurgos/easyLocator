@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<title>Easy locator</title>
+	 <link rel="stylesheet" type="text/css" href="easyLocator.css">  
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+   <script src="easyLocator.js"></script>
+   <script src="markerclusterer.min.js"></script>
+</head>
+
+<body>
+	<div id="locatorList" style="height:400px"></div>
+	<script>      
+
+      //https://snazzymaps.com/
+      var mapStyle = [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#b5004b"},{"lightness":"15"},{"gamma":"1.37"}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#000000"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#b5004b"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#b5004b"},{"lightness":17},{"weight":1.2}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#040404"},{"lightness":20}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":21}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#b5004b"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#b5004b"},{"lightness":29},{"weight":0.2},{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#b5004b"},{"lightness":"0"},{"saturation":"-30"},{"gamma":"1.00"},{"visibility":"off"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":19}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":17}]}]
+
+
+
+      $( document ).ready(function() {
+         $('#locatorList').easyLocator({
+            spreadsheetId: '1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s',            
+            mapOptions: { //all options that do not need google maps loaded, you can load google map first and use them later
+               zoom: 10,
+               center: { lat: -34.397, lng: 150.644 },
+               styles: mapStyle
+            },
+            centerMapOnLocation: false            
+         });
+      });
+   </script>
+</body>
+
+</html>

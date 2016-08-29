@@ -8,7 +8,8 @@
        '<input class="locatorMap_listContainer_filter_input" type="text" placeholder="filter.."> </div><ul class="locatorMap_list js-locatorMap_list"></ul> </div><div class="locatorMap_listContainer locatorMap_list--mobile js-locatorMap_listContainerMobile" style="display:none"> <div class="locatorMap_list_close js-locatorMap_list_Close"> <i class="fa fa-chevron-down"></i> </div><ul class="locatorMap_list"></ul> </div>',
       options: {
          mapContainer: undefined,
-         map: undefined,         
+         map: undefined,
+         mapOptions: undefined,    
          isAPIloaded: false,
          myLocations: [],
          openInfowindowAfterClick: false,
@@ -18,7 +19,8 @@
          infoWindowCustomClass: '',
          useMarkerCluster: false,
          afterCLick: undefined,
-         mapType: undefined,         
+         mapType: undefined, //remove this
+         centerMapOnLocation: true,      
          markerClustererOptions: { 
             maxZoom: 12
          }     
@@ -52,15 +54,17 @@
          
       },
       loadMap : function() {             
-         this.options.isAPIloaded = true;         
-         var mapOptions = {
-            zoom: 8,
-            center: new google.maps.LatLng(-34.397, 150.644),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-         };
-
-         if(typeof this.options.mapType !== 'undefined') {
-            mapOptions.mapTypeId = google.maps.MapTypeId[this.options.mapType];
+         this.options.isAPIloaded = true;
+         var mapOptions;
+         
+         if(typeof this.options.mapOptions == 'undefined') {
+            mapOptions = {
+               zoom: 8,
+               center: new google.maps.LatLng(-34.397, 150.644),
+               mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+         } else {
+            mapOptions = this.options.mapOptions;
          }
 
          this.options.map = new google.maps.Map(document.getElementById('mapContainer_map'), mapOptions);        
@@ -250,9 +254,12 @@
       loadItemsOnList: function(listLocations,itemsHtml) {
          listLocations.html(itemsHtml);
          that.easyLocatorMethods
-         this.centerMapOnLocations();
          this.attachEventLocations();
          this.showHideLoader('hide');
+
+         if(this.options.centerMapOnLocation) {
+            this.centerMapOnLocations();
+         }
       },
       centerMapOnLocations: function() {
          var bounds = new google.maps.LatLngBounds();
@@ -334,14 +341,18 @@
             location.active = false;
 
             if(location.iconMarker != '' &&  typeof location.iconMarker !== 'undefined') {
+
                $(this).find('img').attr('src',location.iconMarker);
 
-               location.marker.setOptions({
+               location.marker.setIcon({
                   icon: {
                      url: location.iconMarker,
                      scaledSize: new google.maps.Size(32,32)
                   }
                });
+               
+            } else {
+               location.marker.setIcon(null);
             }
          });
 
