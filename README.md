@@ -136,6 +136,12 @@ If you do not add the apiKey the map won't load and you will get this error:
 ![error api key](http://i.imgur.com/IRYSwVt.png?1)
 
 
+Additional notes:
+-----------------------
+
+If you map will change of size dynamically you should this according to [Google](https://developers.google.com/maps/documentation/javascript/reference):
+
+Developers should trigger this event on the map when the div changes size: google.maps.event.trigger(map, 'resize') .
 
 **easyLocator is 100% free to use. If you're using easyLocator on a commercial project and feeling generous, consider a donation. Thanks :) !**
 
