@@ -345,10 +345,8 @@
                $(this).find('img').attr('src',location.iconMarker);
 
                location.marker.setIcon({
-                  icon: {
-                     url: location.iconMarker,
-                     scaledSize: new google.maps.Size(32,32)
-                  }
+                  url: location.iconMarker,
+                  scaledSize: new google.maps.Size(32,32)
                });
                
             } else {
