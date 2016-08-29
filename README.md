@@ -125,7 +125,9 @@ easyLocator properties:
 
 **afterCLick (function):** callback function after clicked on an item in the list or marker, you will get only one argument the location clicked
 
-**mapType (string):** Identifiers for common MapTypes: 'HYBRID','ROADMAP','SATELLITE','TERRAIN'
+**mapOptions (Object):** Object with options of google maps.  For more info about what options use, please visit: [Google Maps](https://developers.google.com/maps/documentation/javascript/reference)
+
+**centerMapOnLocation (boolean):** By default the map is centered in all markers, set false if you want use your own location with the  "mapOptions" property
 
 **apiKey (string and Mandatory):** You need create an api key and put it here. Follow these [steps](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
