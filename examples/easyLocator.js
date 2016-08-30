@@ -403,6 +403,8 @@
          $('#mapContainer_map').addClass('locatorMap_map--fullWidth');
          $('.js-locatorMap_listContainerDesktop').hide();
       }
+
+      //testing
       
       return that.easyLocatorMethods;
    };
