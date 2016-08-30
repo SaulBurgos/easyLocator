@@ -3,9 +3,21 @@
    this.easyLocatorMethods = {
       locations: [],
       locationActive: null,
-      htmlPlug: '<div class="locatorMap_loader">Loading...</div><div id="mapContainer_map" class="locatorMap_map"> ' + 
-      '</div><div class="locatorMap_listContainer locatorMap_list--desktop js-locatorMap_listContainerDesktop"><div class="locatorMap_listContainer_filter">  ' +
-       '<input class="locatorMap_listContainer_filter_input" type="text" placeholder="filter.."> </div><ul class="locatorMap_list js-locatorMap_list"></ul> </div><div class="locatorMap_listContainer locatorMap_list--mobile js-locatorMap_listContainerMobile" style="display:none"> <div class="locatorMap_list_close js-locatorMap_list_Close"> <i class="fa fa-chevron-down"></i> </div><ul class="locatorMap_list"></ul> </div>',
+      htmlPlug:   '<div class="locatorMap_loader">Loading...</div>' + 
+                  '<div id="mapContainer_map" class="locatorMap_map"></div>' + 
+                  '<div class="locatorMap_listContainer locatorMap_list--desktop js-locatorMap_listContainerDesktop">' + 
+                     '<div class="locatorMap_listContainer_filter">  ' +
+                        '<input class="locatorMap_listContainer_filter_input" type="text" placeholder="filter..">' + 
+                     '</div>' + 
+                     '<ul class="locatorMap_list js-locatorMap_list"></ul>' + 
+                  '</div>' + 
+                  '<div class="locatorMap_listContainer locatorMap_list--mobile js-locatorMap_listContainerMobile" style="display:none">' + 
+                     '<div class="locatorMap_list_close js-locatorMap_list_Close"><i class="fa fa-chevron-down"></i></div>' + 
+                     '<ul class="locatorMap_list"></ul>' + 
+                  '</div>' + 
+                  '<div class="locatorMap_template">' + 
+                     '<div class="locatorMap_template_close"><i class="fa fa-times-circle"></i></div>' + 
+                  '</div>',
       options: {
          mapContainer: undefined,
          map: undefined,
@@ -17,6 +29,7 @@
          showListOnMobile: true,
          itemListActiveCustomClass: '',
          infoWindowCustomClass: '',
+         contentTemplate: '',
          useMarkerCluster: false,
          afterCLick: undefined,
          mapType: undefined, //remove this
@@ -69,7 +82,7 @@
 
          this.options.map = new google.maps.Map(document.getElementById('mapContainer_map'), mapOptions);        
          this.options.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.createButtonList());
-         this.options.infoWindow = new google.maps.InfoWindow({ maxWidth: 400 });      
+         
          this.options.markerClusterer = new MarkerClusterer(this.options.map, null,this.options.markerClustererOptions);
          
          google.maps.event.addListenerOnce(this.options.map, 'idle', function() { 
@@ -80,13 +93,17 @@
 
             if(that.easyLocatorMethods.options.myLocations.length > 0) {
                that.easyLocatorMethods.loadMyLocations();
-            }
-                          
+            }                          
          });
 
-         google.maps.event.addListener(this.options.infoWindow,'closeclick',function(){            
-            that.easyLocatorMethods.removeAllIconsActive();
-         });
+
+         if(this.options.contentTemplate == '') {            
+            this.options.infoWindow = new google.maps.InfoWindow({ maxWidth: 400 }); 
+
+            google.maps.event.addListener(this.options.infoWindow,'closeclick',function(){            
+               that.easyLocatorMethods.removeAllIconsActive();
+            });
+         }
          
       },
       createEvents: function() {
@@ -272,7 +289,10 @@
          
          function createEvent (location) {
             google.maps.event.addListener(location.marker,'click', function () {
-               that.easyLocatorMethods.openInfoWindow(location);
+
+               if(that.easyLocatorMethods.options.contentTemplate == '' ) {
+                  that.easyLocatorMethods.openInfoWindow(location);
+               }               
 
                that.easyLocatorMethods.setIconsActiveOnItem({
                   elementClicked: $('.locatorMap_list_item')[location.index],
@@ -292,13 +312,13 @@
             $('.locatorMap_list_item').removeClass(that.easyLocatorMethods.options.itemListActiveCustomClass);      
 
             var locationClicked = that.easyLocatorMethods.locations[$(this).attr('data-indexarray')];
-            
-
             that.easyLocatorMethods.options.map.setCenter(locationClicked.marker.getPosition());
 
-            if(that.easyLocatorMethods.options.openInfowindowAfterClick) {
-               that.easyLocatorMethods.openInfoWindow(locationClicked);   
-            }            
+            if(that.easyLocatorMethods.options.openInfowindowAfterClick && that.easyLocatorMethods.options.contentTemplate == '' ) {
+               that.easyLocatorMethods.openInfoWindow(locationClicked);                
+            } else {
+               that.easyLocatorMethods.openTemplate();
+            }     
             
             if( $(window).width() <= 768) {//according to media query              
                $('.js-locatorMap_listContainerMobile').slideToggle( "fast");   
@@ -312,7 +332,10 @@
                elementClicked: this,
                location: locationClicked
             });
+         });
 
+         $('.locatorMap_template_close').on('click',function() {
+            that.easyLocatorMethods.closeTemplate();
          });
       },
       setIconsActiveOnItem: function(data) {
@@ -354,6 +377,12 @@
             }
          });
 
+      },
+      openTemplate : function() {
+         $(this.options.mapContainer).find('.locatorMap_template').show();
+      },
+      closeTemplate : function() {
+         $(this.options.mapContainer).find('.locatorMap_template').hide();
       },
       openInfoWindow: function(location) {
          var locationLink = '';

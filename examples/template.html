@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<title>Easy locator</title>
+	 <link rel="stylesheet" type="text/css" href="easyLocator.css">  
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+   <script src="easyLocator.js"></script>
+   <script src="markerclusterer.min.js"></script>
+   <script src="underscore-min.js"></script>
+</head>
+
+<body>
+	<div id="locatorList" style="height:400px">      
+   </div>
+	<script>      
+      $( document ).ready(function() {
+         $('#locatorList').easyLocator({
+            spreadsheetId: '1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s',
+            useMarkerCluster: true,
+            contentTemplate: '<b>template here</b>',
+            afterCLick: function() {
+               console.log('click on element');
+            },
+            //openInfowindowAfterClick: ,
+            markerClustererOptions: {
+               imagePath: 'images/m'
+            }
+         });
+      });
+   </script>
+</body>
+
+</html>
