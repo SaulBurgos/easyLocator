@@ -12,6 +12,7 @@ Examples:
  1. [Basic example](http://saulburgos.com/apps/easylocator/simple.html)
  2. [Array of object](http://saulburgos.com/apps/easylocator/array.html)
  3. [Google Maps options](http://saulburgos.com/apps/easylocator/customMapOptions.html)
+ 4. [MarkerCluster custom icons](http://saulburgos.com/apps/easylocator/markerClusterCustom.html)
 
 Add easyLocator in your web
 
