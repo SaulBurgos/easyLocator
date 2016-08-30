@@ -103,6 +103,20 @@ easyLocator properties:
 
 **myLocations (array objects):**  array of object with your locations instead of the Google Spreadsheed.
 
+example array : 
+	
+	
+	 var data = [{
+	    title: '',
+	    description: '',
+	    image: '', 
+	    link: '',
+	    iconMarker: '',
+	    iconMarkerActive: ''
+	    lat: 12.9232,
+	    lng: -85.9206
+	 }]
+
 **showListOnDesktop (boolean):** If you want hide the left list items on desktop version, The map will get width 100% automatically
 
 **showListOnMobile (boolean):** If you want hide the left list items on mobile version
@@ -110,18 +124,6 @@ easyLocator properties:
 **itemListActiveCustomClass (string):** This class will be added in the parent item after a click. You can use it to customize the element.
          
 **infoWindowCustomClass (string):** This class will be added in the infoWindow container. You can use it to customize the element.
- 
- example array : 
-	
-	 var data = [{
-            title: '',
-            description: '',
-            image: '', 
-            link: '',
-            iconMarker: '',
-            lat: 12.9232,
-            lng: -85.9206
-         }]
  	
 
 **afterCLick (function):** callback function after clicked on an item in the list or marker, you will get only one argument the location clicked
@@ -136,6 +138,12 @@ If you do not add the apiKey the map won't load and you will get this error:
 ![error api key](http://i.imgur.com/IRYSwVt.png?1)
 
 
+Additional notes:
+-----------------------
+
+If you map will change of size dynamically you should this according to [Google](https://developers.google.com/maps/documentation/javascript/reference):
+
+Developers should trigger this event on the map when the div changes size: google.maps.event.trigger(map, 'resize') .
 
 **easyLocator is 100% free to use. If you're using easyLocator on a commercial project and feeling generous, consider a donation. Thanks :) !**
 
