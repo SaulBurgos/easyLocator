@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<title>Easy locator</title>
+	 <link rel="stylesheet" type="text/css" href="easyLocator.css">  
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+   <script src="easyLocator.js"></script>
+   <script src="markerclusterer.min.js"></script>
+</head>
+
+<body>
+	<div id="locatorList" style="height:400px"></div>
+	<script>    
+
+      $( document ).ready(function() {
+         $('#locatorList').easyLocator({
+            spreadsheetId: '1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s',
+            useMarkerCluster: true ,
+            markerClustererOptions: {
+               imagePath: 'images/m',
+               styles:  [{
+                 url: 'images/conv30.png',
+                 height: 27,
+                 width: 30,
+                 anchor: [3, 0],
+                 textColor: '#ff00ff',
+                 textSize: 10
+               }, {
+                 url: 'images/conv40.png',
+                 height: 36,
+                 width: 40,
+                 anchor: [6, 0],
+                 textColor: '#ff0000',
+                 textSize: 11
+               }, {
+                 url: 'images/conv50.png',
+                 width: 50,
+                 height: 45,
+                 anchor: [8, 0],
+                 textSize: 12
+               }]               
+            }
+         });
+      });
+   </script>
+</body>
+
+</html>
