@@ -174,7 +174,17 @@ You can listen all events in this way:
 How to use templates:
 -----------------------
 
-pending info here wait me please
+1. Add [http://underscorejs.org/](http://underscorejs.org/) dependency
+2. Set your template in the property "contentTemplate" with the correct format. When you set this, easyLocator will not use the infowindow anymore, instead will give you an empty container element with the class "locatorMap_template".
+3. All the content of you template will be inserted inside of "locatorMap_template" element. Is your job add all the styles and media queries needed.
+4. You need always add an element with the class "locatorMap_template_close", this will be used by easyLocator to closed the template.
+5. Add you own styles.
+6. Done
+
+
+If you have problems, please see the examples
+
+
 
 Additional notes:
 -----------------------
