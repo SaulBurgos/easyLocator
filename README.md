@@ -13,6 +13,9 @@ Examples:
  2. [Array of object](http://saulburgos.com/apps/easylocator/array.html)
  3. [Google Maps options](http://saulburgos.com/apps/easylocator/customMapOptions.html)
  4. [MarkerCluster custom icons](http://saulburgos.com/apps/easylocator/markerClusterCustom.html)
+ 5. [Template](http://saulburgos.com/apps/easylocator/template.html)
+ 6. [Template 2](http://saulburgos.com/apps/easylocator/template2.html)
+ 7. [Template 3](http://saulburgos.com/apps/easylocator/template3.html)
 
 Add easyLocator in your web
 
