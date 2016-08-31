@@ -1,7 +1,10 @@
 (function ( $ ) {  
    var that = this;
+   var deferEvents = $.Deferred();
+
    this.easyLocatorMethods = {
       locations: [],
+      onEvents: deferEvents.promise(),
       locationActive: null,
       htmlPlug:   '<div class="locatorMap_loader">Loading...</div>' + 
                   '<div id="mapContainer_map" class="locatorMap_map"></div>' + 
@@ -15,8 +18,7 @@
                      '<div class="locatorMap_list_close js-locatorMap_list_Close"><i class="fa fa-chevron-down"></i></div>' + 
                      '<ul class="locatorMap_list"></ul>' + 
                   '</div>' + 
-                  '<div class="locatorMap_template">' + 
-                     '<div class="locatorMap_template_close"><i class="fa fa-times-circle"></i></div>' + 
+                  '<div class="locatorMap_template">' +                       
                   '</div>',
       options: {
          mapContainer: undefined,
@@ -30,8 +32,7 @@
          itemListActiveCustomClass: '',
          infoWindowCustomClass: '',
          contentTemplate: '',
-         useMarkerCluster: false,
-         afterCLick: undefined,
+         useMarkerCluster: false,         
          mapType: undefined, //remove this
          centerMapOnLocation: true,      
          markerClustererOptions: { 
@@ -66,7 +67,13 @@
          }        
          
       },
-      loadMap : function() {             
+      loadMap : function() {     
+
+         that.easyLocatorMethods.triggerEvent({
+            eventName: 'loadingMap',
+            data: {}
+         });
+
          this.options.isAPIloaded = true;
          var mapOptions;
          
@@ -86,6 +93,12 @@
          this.options.markerClusterer = new MarkerClusterer(this.options.map, null,this.options.markerClustererOptions);
          
          google.maps.event.addListenerOnce(this.options.map, 'idle', function() { 
+
+            that.easyLocatorMethods.triggerEvent({
+               eventName: 'mapLoaded',
+               data: {}
+            });
+
             if(typeof that.easyLocatorMethods.options.spreadsheetId !== 'undefined') {
                that.easyLocatorMethods.getJsonData();               
                return;
@@ -93,9 +106,9 @@
 
             if(that.easyLocatorMethods.options.myLocations.length > 0) {
                that.easyLocatorMethods.loadMyLocations();
-            }                          
-         });
+            }    
 
+         });
 
          if(this.options.contentTemplate == '') {            
             this.options.infoWindow = new google.maps.InfoWindow({ maxWidth: 400 }); 
@@ -292,11 +305,18 @@
 
                if(that.easyLocatorMethods.options.contentTemplate == '' ) {
                   that.easyLocatorMethods.openInfoWindow(location);
-               }               
+               } else {
+                  that.easyLocatorMethods.openTemplate(location);   
+               }      
 
                that.easyLocatorMethods.setIconsActiveOnItem({
                   elementClicked: $('.locatorMap_list_item')[location.index],
                   location: location
+               });
+
+               that.easyLocatorMethods.triggerEvent({
+                  eventName: 'locationClicked',
+                  data: location
                });
             });
          }
@@ -316,9 +336,11 @@
 
             if(that.easyLocatorMethods.options.openInfowindowAfterClick && that.easyLocatorMethods.options.contentTemplate == '' ) {
                that.easyLocatorMethods.openInfoWindow(locationClicked);                
-            } else {
-               that.easyLocatorMethods.openTemplate();
-            }     
+            } 
+
+            if(that.easyLocatorMethods.options.contentTemplate != '') {
+               that.easyLocatorMethods.openTemplate(locationClicked);
+            }
             
             if( $(window).width() <= 768) {//according to media query              
                $('.js-locatorMap_listContainerMobile').slideToggle( "fast");   
@@ -332,9 +354,14 @@
                elementClicked: this,
                location: locationClicked
             });
+
+            that.easyLocatorMethods.triggerEvent({
+               eventName: 'locationClicked',
+               data: locationClicked
+            });
          });
 
-         $('.locatorMap_template_close').on('click',function() {
+         $(this.options.mapContainer).on('click','.locatorMap_template_close',function() {
             that.easyLocatorMethods.closeTemplate();
          });
       },
@@ -378,12 +405,18 @@
          });
 
       },
-      openTemplate : function() {
-         $(this.options.mapContainer).find('.locatorMap_template').show();
+      openTemplate : function(location) { 
+         var compiled = _.template(this.options.contentTemplate);
+         var containerTemplate = $(this.options.mapContainer).find('.locatorMap_template');
+         containerTemplate.html(compiled(location));
+         containerTemplate.show();
+      },
+      triggerEvent: function(data) {
+         deferEvents.notify(data);
       },
       closeTemplate : function() {
          $(this.options.mapContainer).find('.locatorMap_template').hide();
-      },
+      },      
       openInfoWindow: function(location) {
          var locationLink = '';
          var locationImage = '';
@@ -402,12 +435,6 @@
              location.description + '</p>' + locationLink + '</div>';
          this.options.infoWindow.setContent(contentHTMl);
          this.options.infoWindow.open(this.options.map, location.marker);
-         
-         if(typeof this.options.afterCLick !== 'undefined') {
-            if(typeof this.options.afterCLick === 'function') {
-               this.options.afterCLick(location);   
-            }            
-         }
       },
       getMapInstance: function() {
          return this.options.map;

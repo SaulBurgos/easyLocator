@@ -8,24 +8,112 @@
    <script src="easyLocator.js"></script>
    <script src="markerclusterer.min.js"></script>
    <script src="underscore-min.js"></script>
+
+   <style>
+      .guideLine {
+         border:1px solid red;
+      }
+
+      /*****custom css for the button close************/
+      .locatorMap_template_close {   
+         position: absolute;
+         top: -10px;
+         right: -8px;
+         bottom: 0;
+         margin-left: auto;
+         margin-right: auto;
+         font-size: 28px;
+         height: 24px;
+         width: 24px;
+         background-color: white;
+         border-radius: 13px;
+      }
+
+      .locatorMap_template_close .fa {   
+         position: relative;
+         top: -3px;
+         right: 0px;
+      }
+
+      /*****custom css for your template************/
+      /*****you need defined your own media queries************/
+      .myTemplate_image {
+         width: 30%;
+         height: 100%;
+         display: inline-block;
+         vertical-align: top;
+         background-repeat: no-repeat;
+         background-position: 50%;
+         background-size: cover;
+      }
+
+      .myTemplate_content {
+         width: 70%;
+         height: 100%;
+         display: inline-block;
+         vertical-align: top;         
+      }
+
+      .myTemplate_content_title {
+         background-color: #4f83bc;
+         margin: 0;
+         color: white;
+         padding: 7px;
+         text-align: center;
+         height: 10%;
+         overflow: hidden;
+      }
+
+      .myTemplate_content_description {
+         height: 90%;
+         overflow: hidden;
+         padding: 10px;
+         overflow-y: auto;
+      }
+
+      .myTemplate_content_link {
+         text-align: center;
+      }
+
+      .myTemplate_content_link img {
+         height: 60px;
+      }
+
+   </style>
+
 </head>
 
 <body>
 	<div id="locatorList" style="height:400px">      
    </div>
+
 	<script>      
       $( document ).ready(function() {
-         $('#locatorList').easyLocator({
+
+         var template = '<div class="locatorMap_template_close"><i class="fa fa-times-circle"></i></div>' + 
+         '<div class="myTemplate_image" style="background-image:url(<%= image %>)"></div>' + 
+         '<div class="myTemplate_content">' +  
+            '<h2 class="myTemplate_content_title"><%= title %></h2>' + 
+            '<div class="myTemplate_content_description">' + 
+               '<p><%= description %></p>' + 
+               '<div class="myTemplate_content_link">' + 
+                  '<a href="<%= link %>" target="_blank"><img src="https://cdn1.iconfinder.com/data/icons/MetroStation-PNG/128/MB__home.png" /></a>'
+               '</div>'
+            '</div>' + 
+         '</div>';
+
+
+         var easyLocator = $('#locatorList').easyLocator({
             spreadsheetId: '1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s',
             useMarkerCluster: true,
-            contentTemplate: '<b>template here</b>',
-            afterCLick: function() {
-               console.log('click on element');
-            },
-            //openInfowindowAfterClick: ,
+            contentTemplate: template,            
             markerClustererOptions: {
                imagePath: 'images/m'
             }
+         });
+      
+         easyLocator.onEvents.progress(function(evt){
+            console.log(evt);
          });
       });
    </script>
