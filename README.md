@@ -3,7 +3,11 @@
 
 EasyLocator is a jquery plugin to load locations with Google Maps in any website using a google spreadsheet or an array of objects.
 
-Dependencies : [markerclusterer](https://googlemaps.github.io/js-marker-clusterer/docs/reference.html) , [Jquery](https://jquery.com/)
+Dependencies :  , 
+
+1. [markerclusterer](https://googlemaps.github.io/js-marker-clusterer/docs/reference.html)
+2. [Jquery](https://jquery.com/)
+3. [underscorejs](http://underscorejs.org/) (Only if you want use templates)
 
 Note: (The file markerclusterer.min.js in this repo, is a version modified, you can use it if you want)
 
@@ -128,9 +132,8 @@ example array :
 **itemListActiveCustomClass (string):** This class will be added in the parent item after a click. You can use it to customize the element.
          
 **infoWindowCustomClass (string):** This class will be added in the infoWindow container. You can use it to customize the element.
- 	
 
-**afterCLick (function):** callback function after clicked on an item in the list or marker, you will get only one argument the location clicked
+**contentTemplate (string):** template underscorejs with the correct format according to [http://underscorejs.org/](http://underscorejs.org/)
 
 **mapOptions (Object):** Object with options of google maps.  For more info about what options use, please visit: [Google Maps](https://developers.google.com/maps/documentation/javascript/reference)
 
@@ -141,6 +144,35 @@ example array :
 If you do not add the apiKey the map won't load and you will get this error:
 ![error api key](http://i.imgur.com/IRYSwVt.png?1)
 
+Events:
+-----------------------
+
+You can listen all events in this way:
+
+	var easyLocatorPlugin = $(yourContainer).easyLocator({
+          spreadsheetId: '1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU',
+          apiKey: 'YOUR GOOGLE MAP API KEY'
+   	});
+   	
+	easyLocator.onEvents.progress(function(evt){
+            console.log(evt);
+ 	});
+
+**loadingMap:** loading the map.
+
+**templateClosed:** the template was closed
+
+**locationClicked:** location was clicked, in the list or marker on the map.
+
+**infoWindowClosed:** infowindow was closed
+
+**mapLoaded:** map was loaded correctly.
+
+
+How to use templates:
+-----------------------
+
+pending info here wait me please
 
 Additional notes:
 -----------------------
