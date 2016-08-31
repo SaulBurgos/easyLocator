@@ -115,6 +115,11 @@
 
             google.maps.event.addListener(this.options.infoWindow,'closeclick',function(){            
                that.easyLocatorMethods.removeAllIconsActive();
+
+               that.easyLocatorMethods.triggerEvent({
+                  eventName: 'infoWindowClosed',
+                  data: {}
+               });
             });
          }
          
@@ -416,6 +421,11 @@
       },
       closeTemplate : function() {
          $(this.options.mapContainer).find('.locatorMap_template').hide();
+
+         that.easyLocatorMethods.triggerEvent({
+            eventName: 'templateClosed',
+            data: {}
+         });
       },      
       openInfoWindow: function(location) {
          var locationLink = '';
