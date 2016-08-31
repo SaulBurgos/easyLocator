@@ -134,6 +134,25 @@
    transition: all 200ms ease-out;
 }
 
+.locatorMap_template {   
+   position: absolute;
+   background-color: white;
+   height: 90%;
+   width: 85%;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right:0;
+   margin: auto;
+   display: none;
+   box-sizing: border-box;
+   box-shadow: 1px 2px 3px 2px rgba(0, 0, 0, 0.5);   
+}
+
+.locatorMap_template  * {
+   box-sizing: border-box;
+}
+
 /*loader*/
 .locatorMap_loader {
    /*margin: 6em auto;*/
@@ -185,10 +204,14 @@
     transform: rotate(360deg);
   }
 }
-
 /*loader end*/
 
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default *
+
+/* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+
    #locatorMap_openList {
       display: none;
    }
@@ -211,4 +234,14 @@
    .locatorMap_map--fullWidth {
       width: 100%;
    }
+
+   .locatorMap_template {      
+      height: 90%;
+      width: 50%;      
+   }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
 }
