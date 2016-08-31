@@ -157,6 +157,8 @@ You can listen all events in this way:
 	easyLocator.onEvents.progress(function(evt){
             console.log(evt);
  	});
+ 	
+ You will receive an object with all details about the event.
 
 **loadingMap:** loading the map.
 
