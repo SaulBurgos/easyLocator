@@ -1,4 +1,4 @@
-# easyLocator
+# easyLocator V2.0
 
 
 EasyLocator is a jquery plugin to load locations with Google Maps in any website using a google spreadsheet or an array of objects.
