@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<title>Easy locator</title>
+	 <link rel="stylesheet" type="text/css" href="easyLocator.css">  
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+   <script src="easyLocator.js"></script>
+   <script src="markerclusterer.min.js"></script>
+   <script src="underscore-min.js"></script>
+
+   <style>
+      .guideLine {
+         border:1px solid red;
+      }
+
+      /*****custom css for the button close************/
+      .locatorMap_template_close {
+         position: absolute;
+         top: -14px;         
+         bottom: 0;
+         left: -12px;
+         margin-left: auto;
+         margin-right: auto;
+         font-size: 30px;
+         width: 30px;
+         height: 30px;
+         color: red;
+      }
+
+      /*****custom css for your template************/
+      /*****you need defined your own media queries************/
+      .locatorMap_template { /*override default style*/         
+         height: 300px;
+         width: 300px;
+         background-color: rgba(0, 0, 0, 0.75);
+      }
+      
+      .myTemplate_header {
+         height: 100px;
+         background-repeat: no-repeat;
+         background-position: 50%;
+         background-size: cover;
+         background-color: white;
+      }
+
+      .myTemplate_body {
+         height: 200px;
+         overflow: hidden;
+         overflow-y: auto; 
+         color: white;
+         padding: 6px;
+      }
+
+       .myTemplate_content_link {
+         text-align: center;
+      }
+
+      .myTemplate_content_link img {
+         height: 42px;
+      }
+   </style>
+
+</head>
+
+<body>
+	<div id="locatorList" style="height:400px">      
+   </div>
+
+	<script>      
+      $( document ).ready(function() {
+
+         var template = '<div class="myTemplate_header" style="background-image:url(<%= image %>)">' + 
+         '</div>' + 
+         '<div class="myTemplate_body">' + 
+            '<p><%= description %></p>' + 
+            '<div class="myTemplate_content_link">' +                
+               '<a href="<%= link %>" target="_blank"><img src="http://blogs.ubc.ca/aphasiaprogram/files/2012/08/Link-Icon.png" /></a>' + 
+            '</div>' + 
+         '</div>' + 
+         '<div class="locatorMap_template_close"><i class="fa fa-times-circle"></i></div>';
+
+
+         var easyLocator = $('#locatorList').easyLocator({
+            spreadsheetId: '1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s',
+            useMarkerCluster: true,
+            contentTemplate: template,            
+            markerClustererOptions: {
+               imagePath: 'images/m'
+            }
+         });
+      
+         easyLocator.onEvents.progress(function(evt){
+            console.log(evt);
+         });
+      });
+   </script>
+</body>
+
+</html>
