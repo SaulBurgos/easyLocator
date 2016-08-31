@@ -5,7 +5,7 @@ EasyLocator is a jquery plugin to load locations with Google Maps in any website
 
 Dependencies :  , 
 
-1. [markerclusterer](https://googlemaps.github.io/js-marker-clusterer/docs/reference.html)
+1. [markerclusterer](https://github.com/googlemaps/js-marker-clusterer)
 2. [Jquery](https://jquery.com/)
 3. [underscorejs](http://underscorejs.org/) (Only if you want use templates)
 
@@ -103,7 +103,7 @@ easyLocator properties:
 -----------------------
 **spreadsheetId (string):**  Google spreadsheetId 
 
-**useMarkerCluster (boolean):**  If you want use the [cluster marker](https://googlemaps.github.io/js-marker-clusterer/docs/reference.html)
+**useMarkerCluster (boolean):**  If you want use the [cluster marker](https://github.com/googlemaps/js-marker-clusterer)
 
 **markerClustererOptions (object):**  Marker clusterer options
 
