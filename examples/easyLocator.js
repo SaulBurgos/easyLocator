@@ -1,3 +1,13 @@
+/*!
+ * jQuery easyLocator v2.0
+ * https://github.com/SaulBurgos/easyLocator
+ *
+ * Copyright Saul Burgos
+ * http://saulburgos.com/
+ *
+ * Date: 31/08/2016
+ */
+
 (function ( $ ) {  
    var that = this;
    var deferEvents = $.Deferred();

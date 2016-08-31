@@ -1,11 +1,35 @@
+/*!
+ * jQuery easyLocator v2.0
+ * https://github.com/SaulBurgos/easyLocator
+ *
+ * Copyright Saul Burgos
+ * http://saulburgos.com/
+ *
+ * Date: 31/08/2016
+ */
+
 (function ( $ ) {  
    var that = this;
+   var deferEvents = $.Deferred();
+
    this.easyLocatorMethods = {
       locations: [],
+      onEvents: deferEvents.promise(),
       locationActive: null,
-      htmlPlug: '<div class="locatorMap_loader">Loading...</div><div id="mapContainer_map" class="locatorMap_map"> ' + 
-      '</div><div class="locatorMap_listContainer locatorMap_list--desktop js-locatorMap_listContainerDesktop"><div class="locatorMap_listContainer_filter">  ' +
-       '<input class="locatorMap_listContainer_filter_input" type="text" placeholder="filter.."> </div><ul class="locatorMap_list js-locatorMap_list"></ul> </div><div class="locatorMap_listContainer locatorMap_list--mobile js-locatorMap_listContainerMobile" style="display:none"> <div class="locatorMap_list_close js-locatorMap_list_Close"> <i class="fa fa-chevron-down"></i> </div><ul class="locatorMap_list"></ul> </div>',
+      htmlPlug:   '<div class="locatorMap_loader">Loading...</div>' + 
+                  '<div id="mapContainer_map" class="locatorMap_map"></div>' + 
+                  '<div class="locatorMap_listContainer locatorMap_list--desktop js-locatorMap_listContainerDesktop">' + 
+                     '<div class="locatorMap_listContainer_filter">  ' +
+                        '<input class="locatorMap_listContainer_filter_input" type="text" placeholder="filter..">' + 
+                     '</div>' + 
+                     '<ul class="locatorMap_list js-locatorMap_list"></ul>' + 
+                  '</div>' + 
+                  '<div class="locatorMap_listContainer locatorMap_list--mobile js-locatorMap_listContainerMobile" style="display:none">' + 
+                     '<div class="locatorMap_list_close js-locatorMap_list_Close"><i class="fa fa-chevron-down"></i></div>' + 
+                     '<ul class="locatorMap_list"></ul>' + 
+                  '</div>' + 
+                  '<div class="locatorMap_template">' +                       
+                  '</div>',
       options: {
          mapContainer: undefined,
          map: undefined,
@@ -17,8 +41,8 @@
          showListOnMobile: true,
          itemListActiveCustomClass: '',
          infoWindowCustomClass: '',
-         useMarkerCluster: false,
-         afterCLick: undefined,
+         contentTemplate: '',
+         useMarkerCluster: false,         
          mapType: undefined, //remove this
          centerMapOnLocation: true,      
          markerClustererOptions: { 
@@ -53,7 +77,13 @@
          }        
          
       },
-      loadMap : function() {             
+      loadMap : function() {     
+
+         that.easyLocatorMethods.triggerEvent({
+            eventName: 'loadingMap',
+            data: {}
+         });
+
          this.options.isAPIloaded = true;
          var mapOptions;
          
@@ -69,10 +99,16 @@
 
          this.options.map = new google.maps.Map(document.getElementById('mapContainer_map'), mapOptions);        
          this.options.map.controls[google.maps.ControlPosition.TOP_CENTER].push(this.createButtonList());
-         this.options.infoWindow = new google.maps.InfoWindow({ maxWidth: 400 });      
+         
          this.options.markerClusterer = new MarkerClusterer(this.options.map, null,this.options.markerClustererOptions);
          
          google.maps.event.addListenerOnce(this.options.map, 'idle', function() { 
+
+            that.easyLocatorMethods.triggerEvent({
+               eventName: 'mapLoaded',
+               data: {}
+            });
+
             if(typeof that.easyLocatorMethods.options.spreadsheetId !== 'undefined') {
                that.easyLocatorMethods.getJsonData();               
                return;
@@ -80,13 +116,22 @@
 
             if(that.easyLocatorMethods.options.myLocations.length > 0) {
                that.easyLocatorMethods.loadMyLocations();
-            }
-                          
+            }    
+
          });
 
-         google.maps.event.addListener(this.options.infoWindow,'closeclick',function(){            
-            that.easyLocatorMethods.removeAllIconsActive();
-         });
+         if(this.options.contentTemplate == '') {            
+            this.options.infoWindow = new google.maps.InfoWindow({ maxWidth: 400 }); 
+
+            google.maps.event.addListener(this.options.infoWindow,'closeclick',function(){            
+               that.easyLocatorMethods.removeAllIconsActive();
+
+               that.easyLocatorMethods.triggerEvent({
+                  eventName: 'infoWindowClosed',
+                  data: {}
+               });
+            });
+         }
          
       },
       createEvents: function() {
@@ -272,11 +317,21 @@
          
          function createEvent (location) {
             google.maps.event.addListener(location.marker,'click', function () {
-               that.easyLocatorMethods.openInfoWindow(location);
+
+               if(that.easyLocatorMethods.options.contentTemplate == '' ) {
+                  that.easyLocatorMethods.openInfoWindow(location);
+               } else {
+                  that.easyLocatorMethods.openTemplate(location);   
+               }      
 
                that.easyLocatorMethods.setIconsActiveOnItem({
                   elementClicked: $('.locatorMap_list_item')[location.index],
                   location: location
+               });
+
+               that.easyLocatorMethods.triggerEvent({
+                  eventName: 'locationClicked',
+                  data: location
                });
             });
          }
@@ -292,13 +347,15 @@
             $('.locatorMap_list_item').removeClass(that.easyLocatorMethods.options.itemListActiveCustomClass);      
 
             var locationClicked = that.easyLocatorMethods.locations[$(this).attr('data-indexarray')];
-            
-
             that.easyLocatorMethods.options.map.setCenter(locationClicked.marker.getPosition());
 
-            if(that.easyLocatorMethods.options.openInfowindowAfterClick) {
-               that.easyLocatorMethods.openInfoWindow(locationClicked);   
-            }            
+            if(that.easyLocatorMethods.options.openInfowindowAfterClick && that.easyLocatorMethods.options.contentTemplate == '' ) {
+               that.easyLocatorMethods.openInfoWindow(locationClicked);                
+            } 
+
+            if(that.easyLocatorMethods.options.contentTemplate != '') {
+               that.easyLocatorMethods.openTemplate(locationClicked);
+            }
             
             if( $(window).width() <= 768) {//according to media query              
                $('.js-locatorMap_listContainerMobile').slideToggle( "fast");   
@@ -313,6 +370,14 @@
                location: locationClicked
             });
 
+            that.easyLocatorMethods.triggerEvent({
+               eventName: 'locationClicked',
+               data: locationClicked
+            });
+         });
+
+         $(this.options.mapContainer).on('click','.locatorMap_template_close',function() {
+            that.easyLocatorMethods.closeTemplate();
          });
       },
       setIconsActiveOnItem: function(data) {
@@ -355,6 +420,23 @@
          });
 
       },
+      openTemplate : function(location) { 
+         var compiled = _.template(this.options.contentTemplate);
+         var containerTemplate = $(this.options.mapContainer).find('.locatorMap_template');
+         containerTemplate.html(compiled(location));
+         containerTemplate.show();
+      },
+      triggerEvent: function(data) {
+         deferEvents.notify(data);
+      },
+      closeTemplate : function() {
+         $(this.options.mapContainer).find('.locatorMap_template').hide();
+
+         that.easyLocatorMethods.triggerEvent({
+            eventName: 'templateClosed',
+            data: {}
+         });
+      },      
       openInfoWindow: function(location) {
          var locationLink = '';
          var locationImage = '';
@@ -373,12 +455,6 @@
              location.description + '</p>' + locationLink + '</div>';
          this.options.infoWindow.setContent(contentHTMl);
          this.options.infoWindow.open(this.options.map, location.marker);
-         
-         if(typeof this.options.afterCLick !== 'undefined') {
-            if(typeof this.options.afterCLick === 'function') {
-               this.options.afterCLick(location);   
-            }            
-         }
       },
       getMapInstance: function() {
          return this.options.map;
@@ -403,6 +479,8 @@
          $('#mapContainer_map').addClass('locatorMap_map--fullWidth');
          $('.js-locatorMap_listContainerDesktop').hide();
       }
+
+      //testing
       
       return that.easyLocatorMethods;
    };
