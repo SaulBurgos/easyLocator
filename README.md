@@ -20,6 +20,7 @@ Examples:
  5. [Template](http://saulburgos.com/apps/easylocator/template.html)
  6. [Template 2](http://saulburgos.com/apps/easylocator/template2.html)
  7. [Template 3](http://saulburgos.com/apps/easylocator/template3.html)
+ 8. [Rebuild](http://saulburgos.com/apps/easylocator/rebuild.html)
 
 Add easyLocator in your web
 
@@ -98,6 +99,7 @@ SpreadSheet columns:
 easyLocator methods:
 -----------------------
 **getMapInstance:** return the google map instance created
+**getMapInstance:** clean map and list with the new elements. These elements should have the same structure that the array of object
 
 easyLocator properties:
 -----------------------
@@ -169,6 +171,10 @@ You can listen all events in this way:
 **infoWindowClosed:** infowindow was closed
 
 **mapLoaded:** map was loaded correctly.
+
+**rebuildDone:** rebuild done
+
+**getDataDone:** When the data were successfully load from the spreadsheet
 
 
 How to use templates:

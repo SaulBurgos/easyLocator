@@ -16,6 +16,7 @@
       locations: [],
       onEvents: deferEvents.promise(),
       locationActive: null,
+      selectorMapList:  '.locatorMap_list',
       htmlPlug:   '<div class="locatorMap_loader">Loading...</div>' + 
                   '<div id="mapContainer_map" class="locatorMap_map"></div>' + 
                   '<div class="locatorMap_listContainer locatorMap_list--desktop js-locatorMap_listContainerDesktop">' + 
@@ -155,8 +156,7 @@
             .parent().slideDown();            
          } else {
             $('.js-locatorMap_list').find("li").slideDown();
-         }
-         
+         }         
          
       },
       createButtonList: function(controlDiv) {
@@ -211,7 +211,7 @@
          return htmlContent;
       },
       successGetJsonData: function(json) {
-         var listLocations = $('.locatorMap_list');
+         var listLocations = $(this.selectorMapList);
          listLocations.empty();
          var itemsHtml = '';
          
@@ -251,10 +251,15 @@
             }
          }
 
-         this.loadItemsOnList(listLocations,itemsHtml);         
+         this.loadItemsOnList(listLocations,itemsHtml);
+
+         that.easyLocatorMethods.triggerEvent({
+            eventName: 'getDataDone',
+            data: {}
+         });
       },
       loadMyLocations: function() {
-         var listLocations = $('.locatorMap_list');
+         var listLocations = $(this.selectorMapList);
          listLocations.empty();
          var itemsHtml = '';
          
@@ -294,11 +299,15 @@
             }
          }         
 
-         this.loadItemsOnList(listLocations,itemsHtml);         
+         this.loadItemsOnList(listLocations,itemsHtml);
+
+         that.easyLocatorMethods.triggerEvent({
+            eventName: 'getDataDone',
+            data: {}
+         });       
       },
       loadItemsOnList: function(listLocations,itemsHtml) {
-         listLocations.html(itemsHtml);
-         that.easyLocatorMethods
+         listLocations.html(itemsHtml);         
          this.attachEventLocations();
          this.showHideLoader('hide');
 
@@ -458,6 +467,73 @@
       },
       getMapInstance: function() {
          return this.options.map;
+      },
+      cleanMap: function() {
+         for(var i = 0; i < this.locations.length; i++) {
+            this.locations[i].marker.setMap(null);            
+         }
+
+         if(this.options.useMarkerCluster) {
+            this.options.markerClusterer.clearMarkers();
+         }
+      },
+      rebuild: function(newLocations) {
+         this.cleanMap();
+         $(this.selectorMapList).empty();
+         this.locations = [];
+         var itemsHtml = '';
+
+         for(var i = 0; i < newLocations.length; i++) {
+
+            var entry = newLocations[i];
+            var currentPosition;
+            itemsHtml = itemsHtml + this.getContentITemList(i,entry.title ,entry);
+
+            if(entry.marker) {
+               currentPosition = entry.marker.getPosition();
+            } else { 
+               currentPosition = new google.maps.LatLng(entry.lat,entry.lng)
+            }
+
+            var marker = new google.maps.Marker({
+               position: currentPosition, 
+               map: this.options.map,
+               title: entry.title               
+            });          
+            
+            if(typeof entry.iconMarker !== 'undefined' && entry.iconMarker != '') {
+               marker.setOptions({
+                  icon: {
+                     url: entry.iconMarker,
+                     scaledSize: new google.maps.Size(32,32)
+                   }
+               });
+            }
+                      
+            this.locations.push({
+               index: i,
+               title: entry.title,
+               description: entry.description,
+               image: entry.image, 
+               link: entry.link,
+               iconMarker: entry.iconMarker,               
+               iconMarkerActive: entry.iconMarkerActive,               
+               marker: marker,
+               active: false 
+            });
+            
+            if(this.options.useMarkerCluster) {
+               this.options.markerClusterer.addMarker(marker);
+            }
+         }  
+
+         this.loadItemsOnList($(this.selectorMapList),itemsHtml);
+
+         that.easyLocatorMethods.triggerEvent({
+            eventName: 'rebuildDone',
+            data: {}
+         });
+
       }
    };   
    
