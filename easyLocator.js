@@ -51,7 +51,7 @@
       },
       loadScripts : function(container) { 
          this.showHideLoader('show');
-         var scriptMapUrl = 'https://maps.googleapis.com/maps/api/js?libraries=places&signed_in=true' +
+         var scriptMapUrl = 'https://maps.googleapis.com/maps/api/js?libraries=places' +
             '&signed_in=true&language=en&callback=window.easyLocatorMethods.loadMap';
          
          var style = document.createElement('link');
@@ -67,7 +67,7 @@
          } else {
             
             if(typeof this.options.apiKey !== 'undefined') {
-               scriptMapUrl = 'https://maps.googleapis.com/maps/api/js?libraries=places&signed_in=true' +
+               scriptMapUrl = 'https://maps.googleapis.com/maps/api/js?libraries=places' +
                '&signed_in=true&language=en&key=' + this.options.apiKey + '&callback=window.easyLocatorMethods.loadMap';
             }            
             var script = document.createElement('script');
