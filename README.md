@@ -99,6 +99,7 @@ SpreadSheet columns:
 easyLocator methods:
 -----------------------
 **getMapInstance:** return the google map instance created
+
 **getMapInstance:** clean map and list with the new elements. These elements should have the same structure that the array of object
 
 easyLocator properties:
