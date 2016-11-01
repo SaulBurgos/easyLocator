@@ -130,7 +130,7 @@ example array :
 
 **showListOnDesktop (boolean):** If you want hide the left list items on desktop version, The map will get width 100% automatically
 
-**extraFields (array):** by default easyLocator will only set the properties that are needed by the plugin, the rest of column will be ignore. But if you have more columns in the spreadsheet and you want them in the array of locations you can set the names of these columns in this property and each element of the array will have these properties witj the corresponding values.
+**extraFields (array):** by default easyLocator will only set the properties that are needed by the plugin, the rest of columns will be ignore. But if you have more columns in the spreadsheet and you want them in the array of locations you can set the names of these columns in this property and each element of the array will have these properties witj the corresponding values.
 
 Example: 
 
@@ -184,7 +184,7 @@ You can listen all events in this way:
 
 **rebuildDone:** rebuild done
 
-**getDataDone:** When the data were successfully load from the spreadsheet
+**getDataDone:** When the data were successfully load from the spreadsheet, return the array of locations
 
 
 How to use templates:
