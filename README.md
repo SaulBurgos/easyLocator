@@ -134,10 +134,10 @@ example array :
 
 Example: 
 
-$('#locatorList').easyLocator({
-   spreadsheetId: '1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s',   
-   extraFields: ['address','timeopen','timeclosed']   
-}); 
+	$('#locatorList').easyLocator({
+	   spreadsheetId: '1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s',   
+	   extraFields: ['address','timeopen','timeclosed']   
+	}); 
 
 **showListOnMobile (boolean):** If you want hide the left list items on mobile version
  
