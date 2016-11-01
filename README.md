@@ -130,6 +130,15 @@ example array :
 
 **showListOnDesktop (boolean):** If you want hide the left list items on desktop version, The map will get width 100% automatically
 
+**extraFields (array):** by default easyLocator will only set the properties that are needed by the plugin, the rest of column will be ignore. But if you have more columns in the spreadsheet and you want them in the array of locations you can set the names of these columns in this property and each element of the array will have these properties witj the corresponding values.
+
+Example: 
+
+$('#locatorList').easyLocator({
+   spreadsheetId: '1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s',   
+   extraFields: ['address','timeopen','timeclosed']   
+}); 
+
 **showListOnMobile (boolean):** If you want hide the left list items on mobile version
  
 **itemListActiveCustomClass (string):** This class will be added in the parent item after a click. You can use it to customize the element.
