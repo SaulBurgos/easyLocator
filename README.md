@@ -215,7 +215,7 @@ If you map will change of size dynamically you should this according to [Google]
 ---------
 
 
-Additional Tool Paneek.net:
+Additional Tool : Create custom Google streetview virtual tours wihtout programming skill:
 -----------------------
 
 Do you want a create virtual tour with you 360 photos for your business ? Check my service: [http://www.paneek.net/](http://www.paneek.net/)
