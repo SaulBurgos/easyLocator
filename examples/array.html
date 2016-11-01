@@ -25,7 +25,8 @@
             title: 'Matagalpa',
             description: 'pretty girls',
             image: 'http://lorempixel.com/400/200/sports/4/', 
-            link: 'www.saulburgos.com',            
+            link: 'www.saulburgos.com',    
+            address: '',        
             lat: 12.9232,
             lng: -85.9206
          },
@@ -35,7 +36,8 @@
             image: 'http://lorempixel.com/400/200/sports/3/',             
             link: 'https://duckduckgo.com/',
             iconMarker: 'https://d30y9cdsu7xlg0.cloudfront.net/png/122-200.png',
-            iconMarkerActive: 'http://www.freeiconspng.com/uploads/pikachu-png-icon-25.png',            
+            iconMarkerActive: 'http://www.freeiconspng.com/uploads/pikachu-png-icon-25.png',
+            address: '',
             lat: 12.432,
             lng: -86.8747
          }
@@ -43,7 +45,7 @@
 
       $( document ).ready(function() {
         $('#locatorList').easyLocator({
-           myLocations: data
+            myLocations: data,            
         });
       });
    </script>

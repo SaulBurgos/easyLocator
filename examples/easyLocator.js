@@ -5,7 +5,7 @@
  * Copyright Saul Burgos
  * http://saulburgos.com/
  *
- * Date: 31/08/2016
+ * Date: 1/11/2016
  */
 
 (function ( $ ) {  
@@ -45,7 +45,8 @@
          contentTemplate: '',
          useMarkerCluster: false,         
          mapType: undefined, //remove this
-         centerMapOnLocation: true,      
+         centerMapOnLocation: true,
+         extraFields: [],   
          markerClustererOptions: { 
             maxZoom: 12
          }     
@@ -53,7 +54,7 @@
       loadScripts : function(container) { 
          this.showHideLoader('show');
          var scriptMapUrl = 'https://maps.googleapis.com/maps/api/js?libraries=places' +
-            '&signed_in=true&language=en&callback=window.easyLocatorMethods.loadMap';
+            '&language=en&callback=window.easyLocatorMethods.loadMap';
          
          var style = document.createElement('link');
          style.rel = "stylesheet";
@@ -69,7 +70,7 @@
             
             if(typeof this.options.apiKey !== 'undefined') {
                scriptMapUrl = 'https://maps.googleapis.com/maps/api/js?libraries=places' +
-               '&signed_in=true&language=en&key=' + this.options.apiKey + '&callback=window.easyLocatorMethods.loadMap';
+               '&language=en&key=' + this.options.apiKey + '&callback=window.easyLocatorMethods.loadMap';
             }            
             var script = document.createElement('script');
             script.type = 'text/javascript';
@@ -187,28 +188,72 @@
          document.body.appendChild(script);
          
       },
-      getContentITemList: function(i,title,itemInfo) {
+      getContentITemList: function(info) {
 
-         if(typeof itemInfo.gsx$iconmarker !== 'undefined') {
-            itemInfo.iconMarker = itemInfo.gsx$iconmarker.$t;
-         }
-
-         var htmlContent =  '<li class="locatorMap_list_item" data-indexarray="' + i + '" data-isactive="false">' + 
+         var htmlContent =  '<li class="locatorMap_list_item" data-indexarray="' + info.index + '" data-isactive="false">' + 
                '<span class="ocatorMap_list_itemPlaceHolder"></span>'+                
-               ' <span class="locatorMap_list_item_title">' + title + '</span>' +
+               ' <span class="locatorMap_list_item_title">' + info.title + '</span>' +
                '</li>';         
          
-         if(itemInfo.iconMarker == '' || typeof itemInfo.iconMarker == 'undefined' ) {
+         if(info.iconMarker == '' || typeof info.iconMarker == 'undefined' ) {
             htmlContent = htmlContent.replace('<span class="ocatorMap_list_itemPlaceHolder"></span>','<i class="locatorMap_list_item_icon fa fa-map-marker"></i>')
          }
 
-         if(itemInfo.iconMarker != '') {
+         if(info.iconMarker != '') {
             htmlContent = htmlContent.replace(
                '<span class="ocatorMap_list_itemPlaceHolder"></span>',
-               '<img src="' + itemInfo.iconMarker + '" class="locatorMap_list_item_iconImage" />')
+               '<img src="' + info.iconMarker + '" class="locatorMap_list_item_iconImage" />')
          }
          
          return htmlContent;
+      },
+      addExtraFields: function(entry,newLocation) {
+         
+         /*this.options.extraFields.forEach(function(element,index) { 
+
+            if(entry.hasOwnProperty('gsx$' + element)) {
+               newLocation[element] = entry['gsx$' + element].$t;
+            }            
+         });*/
+      },
+      createLocation: function(info) {
+         var itemHtml = this.getContentITemList(info);            
+            
+         var marker = new google.maps.Marker({
+            position: new google.maps.LatLng(info.lat,info.lng),
+            map: this.options.map,
+            title: info.title
+         });            
+         
+         if(info.iconMarker != '' && typeof info.iconMarker !== 'undefined') {
+            marker.setOptions({
+               icon: {
+                  url: info.iconMarker,
+                  scaledSize: new google.maps.Size(32,32)
+                }
+            });
+         }
+         
+         var newLocation = {
+            index: info.index,
+            title: info.title,
+            description: info.description,
+            image: info.image, 
+            link: info.link,
+            iconMarker: info.iconMarker,
+            iconMarkerActive: info.iconMarkerActive,
+            marker: marker, 
+            active: false 
+         };
+         
+         if(this.options.useMarkerCluster) {
+            this.options.markerClusterer.addMarker(marker);
+         }
+
+         return {
+            location: newLocation,
+            html: itemHtml
+         };
       },
       successGetJsonData: function(json) {
          var listLocations = $(this.selectorMapList);
@@ -216,46 +261,37 @@
          var itemsHtml = '';
          
          for(var i = 0; i < json.feed.entry.length; i++) {
-            var entry = json.feed.entry[i];    
-            itemsHtml = itemsHtml + this.getContentITemList(i,entry.gsx$title.$t , entry);            
-            
-            var marker = new google.maps.Marker({
-               position: new google.maps.LatLng(entry.gsx$lat.$t,entry.gsx$lng.$t),               
-               map: this.options.map,
-               title: entry.gsx$title.$t               
-            });            
-            
-            if(entry.gsx$iconmarker.$t != '') {
-               marker.setOptions({
-                  icon: {
-                     url: entry.gsx$iconmarker.$t,
-                     scaledSize: new google.maps.Size(32,32)
-                   }
-               });
-            }
-                      
-            this.locations.push({
+            var entry = json.feed.entry[i];                
+
+            var newLocation = this.createLocation({
                index: i,
                title: entry.gsx$title.$t,
                description: entry.gsx$description.$t,
-               image: entry.gsx$image.$t, 
+               image: entry.gsx$image.$t,
                link: entry.gsx$link.$t,
                iconMarker: entry.gsx$iconmarker.$t,
-               iconMarkerActive: entry.gsx$iconmarkeractive.$t,               
-               marker: marker, 
-               active: false 
+               iconMarkerActive: entry.gsx$iconmarkeractive.$t,
+               lat: entry.gsx$lat.$t,
+               lng: entry.gsx$lng.$t               
             });
-            
-            if(this.options.useMarkerCluster) {
-               this.options.markerClusterer.addMarker(marker);
+
+            if(this.options.extraFields.length > 0) {               
+               this.options.extraFields.forEach(function(element,index) { 
+                  if(entry.hasOwnProperty('gsx$' + element)) {
+                     newLocation.location[element] = entry['gsx$' + element].$t;
+                  }            
+               });
             }
+            
+            itemsHtml = itemsHtml + newLocation.html;
+            this.locations.push(newLocation.location);
          }
 
          this.loadItemsOnList(listLocations,itemsHtml);
 
          that.easyLocatorMethods.triggerEvent({
             eventName: 'getDataDone',
-            data: {}
+            data: this.locations
          });
       },
       loadMyLocations: function() {
@@ -264,46 +300,22 @@
          var itemsHtml = '';
          
          for(var i = 0; i < this.options.myLocations.length; i++) {
-            var entry = this.options.myLocations[i];       
-            itemsHtml = itemsHtml + this.getContentITemList(i,entry.title ,entry);
-            
-            var marker = new google.maps.Marker({
-               position: new google.maps.LatLng(entry.lat,entry.lng),               
-               map: this.options.map,
-               title: entry.title               
-            });          
-            
-            if(typeof entry.iconMarker !== 'undefined') {
-               marker.setOptions({
-                  icon: {
-                     url: entry.iconMarker,
-                     scaledSize: new google.maps.Size(32,32)
-                   }
-               });
-            }
-                      
-            this.locations.push({
-               index: i,
-               title: entry.title,
-               description: entry.description,
-               image: entry.image, 
-               link: entry.link,
-               iconMarker: entry.iconMarker,               
-               iconMarkerActive: entry.iconMarkerActive,               
-               marker: marker,
-               active: false 
-            });
-            
-            if(this.options.useMarkerCluster) {
-               this.options.markerClusterer.addMarker(marker);
-            }
+            var entry = this.options.myLocations[i];     
+
+            entry.index = i;
+            var newLocation = this.createLocation(entry);            
+            //to keep the original properties
+            $.extend(newLocation.location,entry);
+
+            itemsHtml = itemsHtml + newLocation.html;
+            this.locations.push(newLocation.location);
          }         
 
          this.loadItemsOnList(listLocations,itemsHtml);
 
          that.easyLocatorMethods.triggerEvent({
             eventName: 'getDataDone',
-            data: {}
+            data: this.locations
          });       
       },
       loadItemsOnList: function(listLocations,itemsHtml) {
@@ -484,10 +496,14 @@
          var itemsHtml = '';
 
          for(var i = 0; i < newLocations.length; i++) {
-
             var entry = newLocations[i];
             var currentPosition;
-            itemsHtml = itemsHtml + this.getContentITemList(i,entry.title ,entry);
+            
+            itemsHtml = itemsHtml + this.getContentITemList({
+               index: i,
+               title: entry.title,
+               iconMarker: entry.iconMarker
+            });
 
             if(entry.marker) {
                currentPosition = entry.marker.getPosition();
@@ -506,25 +522,27 @@
                   icon: {
                      url: entry.iconMarker,
                      scaledSize: new google.maps.Size(32,32)
-                   }
+                  }
                });
             }
-                      
-            this.locations.push({
-               index: i,
-               title: entry.title,
-               description: entry.description,
-               image: entry.image, 
-               link: entry.link,
-               iconMarker: entry.iconMarker,               
-               iconMarkerActive: entry.iconMarkerActive,               
-               marker: marker,
+              
+            var newItem = {
+               index: i,               
                active: false 
-            });
+            };
+
+            $.extend(newItem,entry);
+            newItem.marker = marker;
+
+            if(this.options.extraFields.length > 0) {
+               this.addExtraFields(entry,newItem);
+            }
             
             if(this.options.useMarkerCluster) {
                this.options.markerClusterer.addMarker(marker);
             }
+
+            this.locations.push(newItem);
          }  
 
          this.loadItemsOnList($(this.selectorMapList),itemsHtml);
@@ -555,8 +573,6 @@
          $('#mapContainer_map').addClass('locatorMap_map--fullWidth');
          $('.js-locatorMap_listContainerDesktop').hide();
       }
-
-      //testing
       
       return that.easyLocatorMethods;
    };

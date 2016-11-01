@@ -27,6 +27,7 @@
          var easyLocator = $('#locatorList').easyLocator({
             spreadsheetId: '1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s',
             useMarkerCluster: true,
+            extraFields: ['address','timeopen','timeclosed'],
             markerClustererOptions: {
                imagePath: 'images/m'
             }
@@ -35,6 +36,8 @@
          easyLocator.onEvents.progress(function(evt) {            
 
             if(evt.eventName == 'getDataDone') {
+               console.log(evt.data);
+
                setTimeout(function() {  
                   //emulate that new objects need to be inserted
                   var newLocations = easyLocator.locations.slice(0, 5);
