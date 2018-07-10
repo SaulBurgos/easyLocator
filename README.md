@@ -215,9 +215,9 @@ If you map will change of size dynamically you should this according to [Google]
 ---------
 
 
-Additional Tool : Create custom Google streetview wihtout programming skill:
+Additional Tool : Create 360° virtual tours wihtout programming skill:
 -----------------------
 
-You only need upload your own 360 photos and done. Check this video : https://www.youtube.com/watch?v=WsPW1BTDc7c 
+Online free service that allow you upload your own 360 images and use them to create fascinating 360° virtual tour.. Check this video : https://www.youtube.com/watch?v=WsPW1BTDc7c 
 
 [http://www.paneek.net/](http://www.paneek.net/)
