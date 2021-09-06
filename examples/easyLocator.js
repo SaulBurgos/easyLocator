@@ -5,7 +5,7 @@
  * Copyright Saul Burgos
  * http://saulburgos.com/
  *
- * Date: 1/11/2016
+ * Date: 09/06/2021
  */
 
 (function ( $ ) {  
@@ -180,12 +180,17 @@
          }        
       },
       getJsonData: function() {
-         var script = document.createElement('script');
-         script.type = 'text/javascript';
-         script.src = 'https://spreadsheets.google.com/feeds/list/' + this.options.spreadsheetId + '/od6/public/values?hl=en_US&alt=json' + 
-          '&callback=window.easyLocatorMethods.successGetJsonData';
-         script.async = true;
-         document.body.appendChild(script);
+         /*
+            Now google use Google Visualization Query result
+            https://developers.google.com/chart/interactive/docs/dev/implementing_data_source#responseformat
+         */
+         const spreadsheetId = "1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s"
+         fetch(`https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:json;responseHandler:window.easyLocatorMethods.successGetJsonData`)
+         .then(res => res.text())
+         .then(text => {
+            //Is risky but Considering it comes from a request to a Google server, and in terms of parsing, it works.
+            eval(text.replace('/*O_o*/',''))
+         })
          
       },
       getContentITemList: function(info) {
@@ -259,34 +264,34 @@
          var listLocations = $(this.selectorMapList);
          listLocations.empty();
          var itemsHtml = '';
-         
-         for(var i = 0; i < json.feed.entry.length; i++) {
-            var entry = json.feed.entry[i];                
 
+         for(var i = 0; i < json.table.rows.length; i++) {
+            const row = json.table.rows[i].c
+            const title = row[0] ? row[0].v : ""
+            const description = row[1] ? row[1].v : ""
+            const image = row[4] ? row[4].v : ""
+            const link = row[5] ? row[5].v : ""
+            const iconMarker = row[6] ? row[6].v : ""
+            const iconMarkerActive = row[7] ? row[7].v : ""
+            const lat = row[2] ? row[2].v : ""
+            const lng = row[3] ? row[3].v : ""
+            
             var newLocation = this.createLocation({
                index: i,
-               title: entry.gsx$title.$t,
-               description: entry.gsx$description.$t,
-               image: entry.gsx$image.$t,
-               link: entry.gsx$link.$t,
-               iconMarker: entry.gsx$iconmarker.$t,
-               iconMarkerActive: entry.gsx$iconmarkeractive.$t,
-               lat: entry.gsx$lat.$t,
-               lng: entry.gsx$lng.$t               
+               title: title,
+               description: description,
+               image: image,
+               link: link,
+               iconMarker: iconMarker,
+               iconMarkerActive: iconMarkerActive,
+               lat: lat,
+               lng: lng               
             });
-
-            if(this.options.extraFields.length > 0) {               
-               this.options.extraFields.forEach(function(element,index) { 
-                  if(entry.hasOwnProperty('gsx$' + element)) {
-                     newLocation.location[element] = entry['gsx$' + element].$t;
-                  }            
-               });
-            }
             
             itemsHtml = itemsHtml + newLocation.html;
             this.locations.push(newLocation.location);
          }
-
+         
          this.loadItemsOnList(listLocations,itemsHtml);
 
          that.easyLocatorMethods.triggerEvent({

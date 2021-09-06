@@ -1,4 +1,4 @@
-# easyLocator V2.0
+# easyLocator V2.1
 
 
 EasyLocator is a jquery plugin to load locations with Google Maps in any website using a google spreadsheet or an array of objects.
@@ -31,14 +31,12 @@ How to use it.
 
 1. Create a Google spreadsheet like [this](https://docs.google.com/spreadsheets/d/1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s/edit?usp=sharing) , columns names need to be the same.
 2. Go to:  "file > publish to the web" and verify the following fields 
-
-	![enter image description here](http://i.imgur.com/0GIrxtA.jpg?1) 
 	
-3. Copy the url and extract the spreadsheetId:
+3. Copy the url from the browser and extract the spreadsheetId:
 
      Example: 
      
-     docs.google.com/spreadsheets/d/**1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU**/pubhtml
+	  https://docs.google.com/spreadsheets/d/**1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU**/edit#gid=0
      
      (bold text is the spreadsheetId)
      
@@ -129,15 +127,6 @@ example array :
 	 }]
 
 **showListOnDesktop (boolean):** If you want hide the left list items on desktop version, The map will get width 100% automatically
-
-**extraFields (array):** by default easyLocator will only set the properties that are needed by the plugin, the rest of columns will be ignore. But if you have more columns in the spreadsheet and you want them in the array of locations you can set the names of these columns in this property and each element of the array will have these properties witj the corresponding values.
-
-Example: 
-
-	$('#locatorList').easyLocator({
-	   spreadsheetId: '1GsuoK3XyWJoiie1eq0qrd-2DxRVSQ0Ut7DkGI23Gq0s',   
-	   extraFields: ['address','timeopen','timeclosed']   
-	}); 
 
 **showListOnMobile (boolean):** If you want hide the left list items on mobile version
  
