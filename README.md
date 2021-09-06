@@ -209,15 +209,5 @@ If you map will change of size dynamically you should this according to [Google]
 
 	Developers should trigger this event on the map when the div changes size: google.maps.event.trigger(map, 'resize') .
 
-**easyLocator is 100% free to use. If you're using easyLocator on a commercial project and feeling generous, consider a donation. Thanks :) !**
 
-[![donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QBMMNFS76EMYU)
 ---------
-
-
-Additional Tool : Create 360° virtual tours wihtout programming skill:
------------------------
-
-Online free service that allow you upload your own 360 images and use them to create fascinating 360° virtual tour.. Check this video : https://www.youtube.com/watch?v=WsPW1BTDc7c 
-
-[http://www.paneek.net/](http://www.paneek.net/)
