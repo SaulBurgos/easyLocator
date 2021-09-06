@@ -36,7 +36,7 @@ How to use it.
 
      Example: 
      
-	  _https://docs.google.com/spreadsheets/d/**1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU**/edit#gid=0
+	  h t t p s://docs.google.com/spreadsheets/d/**1QM92ghpvJpRBryStWI-PWcRhpBSsYPva4XCXUxieXNU**/edit#gid=0
      
      (bold text is the spreadsheetId)
      
